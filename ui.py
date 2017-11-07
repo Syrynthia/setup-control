@@ -1,5 +1,5 @@
-from PyQt5.QtWidgets import (QApplication, QDialog, QDialogButtonBox, QGridLayout, QGroupBox, QLabel, QMenu, QMenuBar, QTextEdit,
-                             QVBoxLayout, QAction)
+from PyQt5.QtWidgets import (QWidget, QDialog, QDialogButtonBox, QGridLayout, QGroupBox, QLabel, QMenu, QMenuBar, QTextEdit,
+                             QVBoxLayout, QAction, QApplication)
 from ReadOdt import readOdt
 
 class UiDialog(QDialog):
@@ -20,7 +20,7 @@ class UiDialog(QDialog):
 
         mainLayout = QVBoxLayout()
         mainLayout.setMenuBar(self.menuBar)
-        mainLayout.addWidget(self.gridGroupBox)
+        mainLayout.addWidget(self.resultFrame)
         mainLayout.addWidget(bigEditor)
         mainLayout.addWidget(buttonBox)
         self.setLayout(mainLayout)
@@ -39,7 +39,7 @@ class UiDialog(QDialog):
         impAct = QAction('Import from file', self)
         manAct = QAction('Add data points manually', self)
         impMenu.addAction(impAct)
-        impAct.triggered.connect(lambda: readOdt(self.tabR, self.tabC, self.table))
+        #impAct.triggered.connect(lambda: readOdt(self.tabR, self.tabC, self.table))
         impAct.triggered.connect(lambda: self.fillTable())
         impMenu.addAction(manAct)
         self.fileMenu.addMenu(impMenu)
@@ -57,30 +57,24 @@ class UiDialog(QDialog):
         self.exitAction.triggered.connect(self.accept)
 
     def createGridGroupBox(self):
-        self.gridGroupBox = QGroupBox(" ")
-        layout = QGridLayout()
-
         self.resultFrame = QGroupBox("Data ")
-        frameLayout = QGridLayout()
+        self.frameLayout = QGridLayout()
         # resultLabel = QLabel(
         #     "Vrt\tLng\tLat\tRtn\tDate\tTime\tVrt (Moving Average)\tLng (Moving Average)\tLat (Moving Average)\tRtn (Moving Average)")
         # frameLayout.addWidget(resultLabel)
-        self.resultFrame.setLayout(frameLayout)
-        layout.addWidget(self.resultFrame, 0, 2, 4, 1)
-
-        layout.setColumnStretch(1, 10)
-        layout.setColumnStretch(2, 20)
-        self.gridGroupBox.setLayout(layout)
+        self.resultFrame.setLayout(self.frameLayout)
     def fillTable(self):
-        frameLayout = QGridLayout()
+        stuff = readOdt()
+        self.tabR = stuff[0]
+        self.tabC = stuff[1]
+        self.table = stuff[2]
+        QWidget().setLayout(self.frameLayout)
+        self.frameLayout = QGridLayout(self)
         for row in range(0, self.tabR):
-            for col in range(0,self.tabC):
-                frameLayout.addWidget(str(self.table[row][col]), row, col)
-                print('Im doing stuff')
-        self.resultFrame.setLayout(frameLayout)
-#if __name__ == '__main__':
-#    import sys
-#
-#    app = QApplication(sys.argv)
-#    dialog = UiDialog()
-#    sys.exit(dialog.exec_())
+            for col in range(0, self.tabC):
+                self.frameLayout.addWidget(QLabel(str(self.table[row][col])), row, col)
+                #print(self.table[row][col])
+
+
+        self.resultFrame.setLayout(self.frameLayout)
+        #self.gridGroupBox.layout().addWidget(self.resultFrame)
