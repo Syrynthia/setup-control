@@ -1,6 +1,7 @@
 from PyQt5.QtWidgets import (QWidget, QDialog, QDialogButtonBox, QGridLayout, QGroupBox, QLabel, QMenu, QMenuBar, QTextEdit,
                              QVBoxLayout, QAction, QApplication)
 from ReadOdt import readOdt
+from PlotCanvas import PlotCanvas
 
 class UiDialog(QDialog):
     labels = ["Date", "Time", "Vrt", "Lng", "Lat", "Rtn"]
@@ -21,8 +22,12 @@ class UiDialog(QDialog):
         mainLayout = QVBoxLayout()
         mainLayout.setMenuBar(self.menuBar)
         mainLayout.addWidget(self.resultFrame)
-        mainLayout.addWidget(bigEditor)
-        mainLayout.addWidget(buttonBox)
+        #mainLayout.addWidget(bigEditor)
+        #mainLayout.addWidget(buttonBox)
+
+        self.m = PlotCanvas(self, width=5, height=4)
+        mainLayout.addWidget(self.m)
+
         self.setLayout(mainLayout)
 
         self.setWindowTitle("Setup control")
@@ -77,4 +82,5 @@ class UiDialog(QDialog):
 
 
         self.resultFrame.setLayout(self.frameLayout)
+        self.m.plot()
         #self.gridGroupBox.layout().addWidget(self.resultFrame)
