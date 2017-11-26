@@ -21,8 +21,19 @@ class PlotCanvas(FigureCanvas):
 
     def plot(self):
         self.axes.cla()
-        data = [random.random() for i in range(25)]
+        #data = [random.random() for i in range(25)]
+        data = [0, 0, 0]
         ax = self.figure.add_subplot(111)
         ax.plot(data, 'r-')
-        ax.set_title('Plot placeholder')
+        #ax.set_title('Plot placeholder')
+        self.draw()
+
+    def plotData(self, data):
+        self.axes.cla()
+        #data = [random.random() for i in range(25)]
+        line = [0  for i in range(0, len(data))]
+        ax = self.figure.add_subplot(111)
+        ax.plot(data, 'bo')
+        ax.plot(line, 'r-')
+        #ax.set_title('Plot placeholder')
         self.draw()
