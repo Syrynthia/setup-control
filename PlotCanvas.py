@@ -26,14 +26,17 @@ class PlotCanvas(FigureCanvas):
         ax = self.figure.add_subplot(111)
         ax.plot(data, 'r-')
         #ax.set_title('Plot placeholder')
+        ax.set_ylabel('')
         self.draw()
 
-    def plotData(self, data):
+    def plotChecked(self, data):
         self.axes.cla()
-        #data = [random.random() for i in range(25)]
-        line = [0  for i in range(0, len(data))]
+        colors = ['bo', 'go', 'co', 'mo']
+        length = max([4, len(max(data, key=len))])
+        line = [0 for i in range(0, length)]
         ax = self.figure.add_subplot(111)
-        ax.plot(data, 'bo')
         ax.plot(line, 'r-')
-        #ax.set_title('Plot placeholder')
+        for i in range(0, 4):
+            ax.plot(data[i], colors[i])
+        ax.set_ylabel('distance from the original centre [mm]')
         self.draw()

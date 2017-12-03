@@ -3,6 +3,7 @@ from PyQt5.QtWidgets import (QWidget, QDialog, QDialogButtonBox, QGridLayout, QG
                              QVBoxLayout, QAction, QApplication, QCheckBox)
 from ReadOdt import readOdt
 from PlotCanvas import PlotCanvas
+from PyQt5.QtCore import Qt
 
 
 class UiDialog(QDialog):
@@ -14,17 +15,13 @@ class UiDialog(QDialog):
     lng = []
     lat = []
     rtn = []
+    toplot = [[], [], [], []]
 
     def __init__(self):
         super(UiDialog, self).__init__()
         self.createMenu()
         self.createGridGroupBox()
         self.createPlotFrame()
-
-        bigEditor = QTextEdit()
-        bigEditor.setPlainText("Here is where the plot of moving averages will be")
-
-        buttonBox = QDialogButtonBox(QDialogButtonBox.Close)
 
         mainLayout = QVBoxLayout()
         mainLayout.setMenuBar(self.menuBar)
@@ -63,6 +60,7 @@ class UiDialog(QDialog):
         saveMenu.addAction(pdfAct)
         saveMenu.addAction(csvAct)
         self.fileMenu.addMenu(saveMenu)
+        self.fileMenu.addAction(QAction('Help', self))
         self.exitAction = self.fileMenu.addAction("E&xit")
 
         self.menuBar.addMenu(self.fileMenu)
@@ -81,17 +79,23 @@ class UiDialog(QDialog):
         self.plotFrame = QGroupBox(" ")
         self.plotFrame.setStyleSheet("border:0;")
         self.plotLayout = QGridLayout()
-        self.m = PlotCanvas(self, width=5, height=4)
+        self.m = PlotCanvas(self, width=7, height=5)
         self.plotLayout.addWidget(self.m, 0, 0)
 
         self.checkboxes = QGroupBox("")
         self.checkboxes.setStyleSheet("border:0;")
         self.checkboxesLayout = QVBoxLayout()
-        cbVrt = QCheckBox('Show Vrt', self)
-        cbLng = QCheckBox('Show Lng', self)
-        cbLat = QCheckBox('Show Lat', self)
-        cbRtn = QCheckBox('Show Rtn', self)
-        self.checkboxesLayout.addWidget(cbVrt)
+
+        self.cbVrt = QCheckBox('Vertical', self)
+        self.cbVrt.stateChanged.connect(self.drawVrt)
+        cbLng = QCheckBox('Longitudinal', self)
+        cbLng.stateChanged.connect(self.drawLng)
+        cbLat = QCheckBox('Latitudinal', self)
+        cbLat.stateChanged.connect(self.drawLat)
+        cbRtn = QCheckBox('Rotational', self)
+        cbRtn.stateChanged.connect(self.drawRtn)
+
+        self.checkboxesLayout.addWidget(self.cbVrt)
         self.checkboxesLayout.addWidget(cbLng)
         self.checkboxesLayout.addWidget(cbLat)
         self.checkboxesLayout.addWidget(cbRtn)
@@ -122,6 +126,38 @@ class UiDialog(QDialog):
                 # print(self.table[row][col])
 
         self.resultFrame.setLayout(self.frameLayout)
-        self.m.plotData(self.vrt)
-        #print(self.lng)
-        # self.gridGroupBox.layout().addWidget(self.resultFrame)
+        self.cbVrt.toggle()
+        if not self.cbVrt.checkState():
+            self.cbVrt.toggle()
+
+    def drawVrt(self, state):
+            if state == Qt.Checked:
+                self.toplot[0] = self.vrt
+                self.m.plotChecked(self.toplot)
+            else:
+                self.toplot[0] = []
+                self.m.plotChecked(self.toplot)
+
+    def drawLng(self, state):
+            if state == Qt.Checked:
+                self.toplot[1] = self.lng
+                self.m.plotChecked(self.toplot)
+            else:
+                self.toplot[1] = []
+                self.m.plotChecked(self.toplot)
+
+    def drawLat(self, state):
+            if state == Qt.Checked:
+                self.toplot[2] = self.lat
+                self.m.plotChecked(self.toplot)
+            else:
+                self.toplot[2] = []
+                self.m.plotChecked(self.toplot)
+
+    def drawRtn(self, state):
+            if state == Qt.Checked:
+                self.toplot[3] = self.rtn
+                self.m.plotChecked(self.toplot)
+            else:
+                self.toplot[3] = []
+                self.m.plotChecked(self.toplot)
