@@ -1,13 +1,13 @@
 from PyQt5.QtWidgets import (QWidget, QDialog, QDialogButtonBox, QGridLayout, QGroupBox, QLabel, QMenu, QMenuBar,
                              QTextEdit,
                              QVBoxLayout, QAction, QApplication, QCheckBox)
-from ReadOdt import readOdt
+from ReadOdt import read_odt
 from PlotCanvas import PlotCanvas
 from PyQt5.QtCore import Qt
 
 
 class UiDialog(QDialog):
-    labels = ["Date", "Time", "Vrt", "Lng", "Lat", "Rtn"]
+    dates = ["Date", "Time", "Vrt", "Lng", "Lat", "Rtn"]
     table = [[0] * 1 for i in range(0, 1)]
     tabR = 0
     tabC = 0
@@ -16,6 +16,7 @@ class UiDialog(QDialog):
     lat = []
     rtn = []
     toplot = [[], [], [], []]
+    dates = []
 
     def __init__(self):
         super(UiDialog, self).__init__()
@@ -46,12 +47,19 @@ class UiDialog(QDialog):
         # self.saveAct = self.fileMenu.addAction(self,QAction("&Save", self, shortcut=QKeySequence.Save,
         # statusTip="Save the document to disk", triggered=self.save))
         impMenu = QMenu('Import', self)
-        impAct = QAction('Import from file', self)
-        manAct = QAction('Add data points manually', self)
+        impAct = QAction('Single Patient', self)
+        #manAct = QAction('Multiple Patients', self)
         impMenu.addAction(impAct)
-        # impAct.triggered.connect(lambda: readOdt(self.tabR, self.tabC, self.table))
         impAct.triggered.connect(lambda: self.fillTable())
-        impMenu.addAction(manAct)
+
+        multiPat = QMenu('Multiple Patients', self)
+        chooseFiles = QAction('Choose multiple files', self)
+        chooseFolder = QAction('Choose folder', self)
+        multiPat.addAction(chooseFiles)
+        multiPat.addAction(chooseFolder)
+
+        impMenu.addMenu(multiPat)
+        #impMenu.addAction(manAct)
         self.fileMenu.addMenu(impMenu)
         # self.saveAction = self.fileMenu.addAction("&Save")
         saveMenu = QMenu('Save As...', self)
@@ -105,7 +113,7 @@ class UiDialog(QDialog):
         self.plotFrame.setLayout(self.plotLayout)
 
     def fillTable(self):
-        stuff = readOdt()
+        stuff = read_odt()
         self.tabR = stuff[0]
         self.tabC = stuff[1]
         self.table = stuff[2]
@@ -115,12 +123,14 @@ class UiDialog(QDialog):
         self.lng.clear()
         self.lat.clear()
         self.rtn.clear()
+        self.dates.clear()
         for row in range(0, self.tabR):
             if row > 2:
                 self.vrt.append(float(self.table[row][0]))
                 self.lng.append(float(self.table[row][1]))
                 self.lat.append(float(self.table[row][2]))
                 self.rtn.append(float(self.table[row][3]))
+                self.dates.append(self.table[row][4])
             for col in range(0, self.tabC):
                 self.frameLayout.addWidget(QLabel(str(self.table[row][col])), row, col)
                 # print(self.table[row][col])
@@ -133,31 +143,31 @@ class UiDialog(QDialog):
     def drawVrt(self, state):
             if state == Qt.Checked:
                 self.toplot[0] = self.vrt
-                self.m.plotChecked(self.toplot)
+                self.m.plotChecked(self.toplot, self.dates)
             else:
                 self.toplot[0] = []
-                self.m.plotChecked(self.toplot)
+                self.m.plotChecked(self.toplot, self.dates)
 
     def drawLng(self, state):
             if state == Qt.Checked:
                 self.toplot[1] = self.lng
-                self.m.plotChecked(self.toplot)
+                self.m.plotChecked(self.toplot, self.dates)
             else:
                 self.toplot[1] = []
-                self.m.plotChecked(self.toplot)
+                self.m.plotChecked(self.toplot, self.dates)
 
     def drawLat(self, state):
             if state == Qt.Checked:
                 self.toplot[2] = self.lat
-                self.m.plotChecked(self.toplot)
+                self.m.plotChecked(self.toplot, self.dates)
             else:
                 self.toplot[2] = []
-                self.m.plotChecked(self.toplot)
+                self.m.plotChecked(self.toplot, self.dates)
 
     def drawRtn(self, state):
             if state == Qt.Checked:
                 self.toplot[3] = self.rtn
-                self.m.plotChecked(self.toplot)
+                self.m.plotChecked(self.toplot, self.dates)
             else:
                 self.toplot[3] = []
-                self.m.plotChecked(self.toplot)
+                self.m.plotChecked(self.toplot, self.dates)
