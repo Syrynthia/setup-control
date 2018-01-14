@@ -4,11 +4,16 @@ from tkinter import Tk
 from odf.table import Table, TableRow, TableCell
 from math import fabs
 import numpy as np
+from PyQt5.QtWidgets import QDialog
+from MultiplePatients import MultiPatientsDialog
+from os import listdir
+from os.path import isfile, join
 
 # global variable that holds the value of the treshold
 TRESH = 0.2
 # this is the row data in the table starts on
 TABLE_DATA_ROW = 3
+
 
 def read_odt():
     table = [[0] * 1 for i in range(0, 1)]
@@ -68,6 +73,27 @@ def calculate_avg_stdev(table):
         lat.append(float(table[row][2]))
         rtn.append(float(table[row][3]))
 
-    mean = [np.mean(vrt), np.mean(lng), np.mean(lat), np.mean(rtn)]
-    stdev = [np.std(vrt), np.std(lng), np.std(lat), np.std(rtn)]
+    mean = np.around([np.mean(vrt), np.mean(lng), np.mean(lat), np.mean(rtn)], decimals=1)
+    stdev = np.around([np.std(vrt), np.std(lng), np.std(lat), np.std(rtn)], decimals=2)
+
     return [mean, stdev]
+
+
+def choose_multi_patients():
+    root = Tk()
+    root.withdraw()
+    filez = filedialog.askopenfilenames(parent=root, filetypes=(("ODT files", "*.odt"), ("All files", "*")))
+    if filez:
+        widget = MultiPatientsDialog(filez)
+        widget.exec_()
+
+
+def choose_dir_multi_patients():
+    root = Tk()
+    root.withdraw()
+    directory = filedialog.askdirectory(parent=root)
+    files = [f for f in listdir(directory) if isfile(join(directory, f))]
+    filez = [directory + "/" + f for f in files]
+    if filez:
+        widget = MultiPatientsDialog(filez)
+        widget.exec_()

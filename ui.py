@@ -2,6 +2,7 @@ from PyQt5.QtWidgets import (QWidget, QDialog, QDialogButtonBox, QGridLayout, QG
                              QTextEdit,
                              QVBoxLayout, QAction, QApplication, QCheckBox)
 from ReadOdt import read_odt
+from ReadOdt import choose_multi_patients, choose_dir_multi_patients
 from PlotCanvas import PlotCanvas
 from PyQt5.QtCore import Qt
 
@@ -57,6 +58,8 @@ class UiDialog(QDialog):
         chooseFolder = QAction('Choose folder', self)
         multiPat.addAction(chooseFiles)
         multiPat.addAction(chooseFolder)
+        chooseFiles.triggered.connect(choose_multi_patients)
+        chooseFolder.triggered.connect(choose_dir_multi_patients)
 
         impMenu.addMenu(multiPat)
         #impMenu.addAction(manAct)
@@ -171,3 +174,4 @@ class UiDialog(QDialog):
             else:
                 self.toplot[3] = []
                 self.m.plotChecked(self.toplot, self.dates)
+
