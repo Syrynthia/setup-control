@@ -9,10 +9,12 @@ from MultiplePatients import MultiPatientsDialog
 from os import listdir
 from os.path import isfile, join
 
-# global variable that holds the value of the treshold
-TRESH = 0.2
+# global variable that holds the value of the treshold [cm]
+TRESH = 0.3
 # this is the row data in the table starts on
 TABLE_DATA_ROW = 3
+#this is the number of sessions after which corrections were applied
+SESSION_NUM = 3
 
 
 def read_odt():
@@ -46,19 +48,35 @@ def read_table(filez):
             string = str(tab.getElementsByType(TableRow)[i].getElementsByType(TableCell)[j])
             table[i][j] = string
 
-    for i in range(6, row):
+    for i in range(TABLE_DATA_ROW+SESSION_NUM, row):
         vrtAv = float(table[i - 1][6])
         lngAv = float(table[i - 1][7])
         latAv = float(table[i - 1][8])
         rtnAv = float(table[i - 1][9])
         if fabs(vrtAv) > TRESH:
-            table[i][0] = str(float(table[i][0]) - vrtAv)
+            try:
+                vrt = float(table[i][0])
+                table[i][0] = str(vrt - vrtAv)
+            except ValueError:
+                pass
         if fabs(lngAv) > TRESH:
-            table[i][1] = str(float(table[i][0]) - lngAv)
+            try:
+                lng = float(table[i][1])
+                table[i][1] = str(lng - lngAv)
+            except ValueError:
+                pass
         if fabs(latAv) > TRESH:
-            table[i][2] = str(float(table[i][0]) - latAv)
+            try:
+                lat = float(table[i][2])
+                table[i][2] = str(lat - latAv)
+            except ValueError:
+                pass
         if fabs(rtnAv) > TRESH:
-            table[i][3] = str(float(table[i][0]) - rtnAv)
+            try:
+                rtn = float(table[i][3])
+                table[i][3] = str(rtn- rtnAv)
+            except ValueError:
+                pass
         return [row, col, table]
 
 
@@ -68,10 +86,26 @@ def calculate_avg_stdev(table):
     lat = []
     rtn = []
     for row in range(TABLE_DATA_ROW, len(table)):
-        vrt.append(float(table[row][0]))
-        lng.append(float(table[row][1]))
-        lat.append(float(table[row][2]))
-        rtn.append(float(table[row][3]))
+        try:
+            vr = float(table[row][0])
+            vrt.append(vr)
+        except ValueError:
+            pass
+        try:
+            ln = float(table[row][1])
+            lng.append(ln)
+        except ValueError:
+            pass
+        try:
+            la = float(table[row][2])
+            lat.append(la)
+        except ValueError:
+            pass
+        try:
+            rt = float(table[row][3])
+            rtn.append(rt)
+        except ValueError:
+            pass
 
     mean = np.around([np.mean(vrt), np.mean(lng), np.mean(lat), np.mean(rtn)], decimals=1)
     stdev = np.around([np.std(vrt), np.std(lng), np.std(lat), np.std(rtn)], decimals=2)

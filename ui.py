@@ -129,10 +129,26 @@ class UiDialog(QDialog):
         self.dates.clear()
         for row in range(0, self.tabR):
             if row > 2:
-                self.vrt.append(float(self.table[row][0]))
-                self.lng.append(float(self.table[row][1]))
-                self.lat.append(float(self.table[row][2]))
-                self.rtn.append(float(self.table[row][3]))
+                try:
+                    vr = float(self.table[row][0])
+                    self.vrt.append(vr)
+                except ValueError:
+                    pass
+                try:
+                    ln = float(self.table[row][1])
+                    self.lng.append(ln)
+                except ValueError:
+                    pass
+                try:
+                    la = float(self.table[row][2])
+                    self.lat.append(la)
+                except ValueError:
+                    pass
+                try:
+                    rt = float(self.table[row][3])
+                    self.rtn.append(rt)
+                except ValueError:
+                    pass
                 self.dates.append(self.table[row][4])
             for col in range(0, self.tabC):
                 self.frameLayout.addWidget(QLabel(str(self.table[row][col])), row, col)
