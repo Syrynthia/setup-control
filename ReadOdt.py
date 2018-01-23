@@ -5,19 +5,16 @@ from odf.table import Table, TableRow, TableCell
 from math import fabs
 import numpy as np
 from PyQt5.QtWidgets import QDialog
-from MultiplePatients import MultiPatientsDialog
-from os import listdir
-from os.path import isfile, join
 
 # global variable that holds the value of the treshold [cm]
-TRESH = 0.3
+#THRESH = 0.3
 # this is the row data in the table starts on
 TABLE_DATA_ROW = 3
 #this is the number of sessions after which corrections were applied
 SESSION_NUM = 3
 
 
-def read_odt():
+def read_odt(threshold):
     table = [[0] * 1 for i in range(0, 1)]
     root = Tk()
     root.withdraw()
@@ -27,11 +24,12 @@ def read_odt():
         row = 0
         col = 0
     else:
-        [row, col, table] = read_table(filez)
+        [row, col, table] = read_table(filez, threshold)
     return [row, col, table]
 
 
-def read_table(filez):
+def read_table(filez, threshold):
+    #print("read threshold " + str(threshold))
     table = [[0] * 1 for i in range(0, 1)]
     doc = load(filez)
     tab = doc.text.getElementsByType(Table)[0]
@@ -53,28 +51,28 @@ def read_table(filez):
         lngAv = float(table[i - 1][7])
         latAv = float(table[i - 1][8])
         rtnAv = float(table[i - 1][9])
-        if fabs(vrtAv) > TRESH:
+        if fabs(vrtAv) > threshold:
             try:
                 vrt = float(table[i][0])
-                table[i][0] = str(vrt - vrtAv)
+                table[i][0] = str(np.around(vrt - vrtAv, decimals=1))
             except ValueError:
                 pass
-        if fabs(lngAv) > TRESH:
+        if fabs(lngAv) > threshold:
             try:
                 lng = float(table[i][1])
-                table[i][1] = str(lng - lngAv)
+                table[i][1] = str(np.around(lng - lngAv, decimals=1))
             except ValueError:
                 pass
-        if fabs(latAv) > TRESH:
+        if fabs(latAv) > threshold:
             try:
                 lat = float(table[i][2])
-                table[i][2] = str(lat - latAv)
+                table[i][2] = str(np.around(lat - latAv, decimals=1))
             except ValueError:
                 pass
-        if fabs(rtnAv) > TRESH:
+        if fabs(rtnAv) > threshold:
             try:
                 rtn = float(table[i][3])
-                table[i][3] = str(rtn- rtnAv)
+                table[i][3] = str(np.around(rtn - rtnAv, decimals=1))
             except ValueError:
                 pass
         return [row, col, table]
@@ -111,23 +109,3 @@ def calculate_avg_stdev(table):
     stdev = np.around([np.std(vrt), np.std(lng), np.std(lat), np.std(rtn)], decimals=2)
 
     return [mean, stdev]
-
-
-def choose_multi_patients():
-    root = Tk()
-    root.withdraw()
-    filez = filedialog.askopenfilenames(parent=root, filetypes=(("ODT files", "*.odt"), ("All files", "*")))
-    if filez:
-        widget = MultiPatientsDialog(filez)
-        widget.exec_()
-
-
-def choose_dir_multi_patients():
-    root = Tk()
-    root.withdraw()
-    directory = filedialog.askdirectory(parent=root)
-    files = [f for f in listdir(directory) if isfile(join(directory, f))]
-    filez = [directory + "/" + f for f in files]
-    if filez:
-        widget = MultiPatientsDialog(filez)
-        widget.exec_()

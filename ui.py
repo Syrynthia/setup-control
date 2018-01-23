@@ -2,9 +2,15 @@ from PyQt5.QtWidgets import (QWidget, QDialog, QDialogButtonBox, QGridLayout, QG
                              QTextEdit,
                              QVBoxLayout, QAction, QApplication, QCheckBox)
 from ReadOdt import read_odt
-from ReadOdt import choose_multi_patients, choose_dir_multi_patients
 from PlotCanvas import PlotCanvas
 from PyQt5.QtCore import Qt
+from Preferences import PreferencesDialog
+from tkinter import filedialog
+from tkinter import Tk
+from MultiplePatients import MultiPatientsDialog
+from os import listdir
+from os.path import isfile, join
+
 
 
 class UiDialog(QDialog):
@@ -18,6 +24,7 @@ class UiDialog(QDialog):
     rtn = []
     toplot = [[], [], [], []]
     dates = []
+    threshold = 0.3
 
     def __init__(self):
         super(UiDialog, self).__init__()
@@ -58,8 +65,8 @@ class UiDialog(QDialog):
         chooseFolder = QAction('Choose folder', self)
         multiPat.addAction(chooseFiles)
         multiPat.addAction(chooseFolder)
-        chooseFiles.triggered.connect(choose_multi_patients)
-        chooseFolder.triggered.connect(choose_dir_multi_patients)
+        chooseFiles.triggered.connect(self.choose_multi_patients)
+        chooseFolder.triggered.connect(self.choose_dir_multi_patients)
 
         impMenu.addMenu(multiPat)
         #impMenu.addAction(manAct)
@@ -75,6 +82,13 @@ class UiDialog(QDialog):
         self.exitAction = self.fileMenu.addAction("E&xit")
 
         self.menuBar.addMenu(self.fileMenu)
+
+        self.edit_menu = QMenu("&Edit", self)
+        pref_act = QAction("Preferences", self)
+        pref_act.triggered.connect(self.preferences)
+        self.edit_menu.addAction(pref_act)
+
+        self.menuBar.addMenu(self.edit_menu)
 
         self.exitAction.triggered.connect(self.accept)
 
@@ -116,7 +130,7 @@ class UiDialog(QDialog):
         self.plotFrame.setLayout(self.plotLayout)
 
     def fillTable(self):
-        stuff = read_odt()
+        stuff = read_odt(self.threshold)
         self.tabR = stuff[0]
         self.tabC = stuff[1]
         self.table = stuff[2]
@@ -191,3 +205,29 @@ class UiDialog(QDialog):
                 self.toplot[3] = []
                 self.m.plotChecked(self.toplot, self.dates)
 
+    def change_thresh(self, value):
+        self.threshold = value
+
+    def preferences(self):
+        widget = PreferencesDialog(self.threshold)
+        widget.exec_()
+        self.threshold = widget.get_threshold()
+        print(self.threshold)
+
+    def choose_multi_patients(self):
+        root = Tk()
+        root.withdraw()
+        filez = filedialog.askopenfilenames(parent=root, filetypes=(("ODT files", "*.odt"), ("All files", "*")))
+        if filez:
+            widget = MultiPatientsDialog(filez, self.threshold)
+            widget.exec_()
+
+    def choose_dir_multi_patients(self):
+        root = Tk()
+        root.withdraw()
+        directory = filedialog.askdirectory(parent=root)
+        files = [f for f in listdir(directory) if isfile(join(directory, f))]
+        filez = [directory + "/" + f for f in files]
+        if filez:
+            widget = MultiPatientsDialog(filez, self.threshold)
+            widget.exec_()
