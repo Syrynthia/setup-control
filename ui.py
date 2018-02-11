@@ -1,30 +1,38 @@
 from PyQt5.QtWidgets import (QWidget, QDialog, QDialogButtonBox, QGridLayout, QGroupBox, QLabel, QMenu, QMenuBar,
                              QTextEdit,
-                             QVBoxLayout, QAction, QApplication, QCheckBox)
-from ReadOdt import read_odt
+                             QVBoxLayout, QAction, QApplication, QCheckBox, QHBoxLayout, QScrollArea)
+import ReadOdt
 from PlotCanvas import PlotCanvas
 from PyQt5.QtCore import Qt
 from Preferences import PreferencesDialog
 from tkinter import filedialog
 from tkinter import Tk
-from MultiplePatients import MultiPatientsDialog
-from os import listdir
+from SinglePatient import SinglePatientWindow
+import os
 from os.path import isfile, join
 
 
 
 class UiDialog(QDialog):
-    dates = ["Date", "Time", "Vrt", "Lng", "Lat", "Rtn"]
-    table = [[0] * 1 for i in range(0, 1)]
+    #ates = ["Date", "Time", "Vrt", "Lng", "Lat", "Rtn"]
+    #table = [[0] * 1 for i in range(0, 1)]
     tabR = 0
     tabC = 0
     vrt = []
     lng = []
     lat = []
     rtn = []
+    vrt_error = []
+    lng_error = []
+    lat_error = []
+    rtn_error = []
     toplot = [[], [], [], []]
     dates = []
     threshold = 0.3
+    table = []
+    mean_table = []
+    std_table = []
+    filenames = []
 
     def __init__(self):
         super(UiDialog, self).__init__()
@@ -58,7 +66,7 @@ class UiDialog(QDialog):
         impAct = QAction('Single Patient', self)
         #manAct = QAction('Multiple Patients', self)
         impMenu.addAction(impAct)
-        impAct.triggered.connect(lambda: self.fillTable())
+        impAct.triggered.connect(self.single_pat)
 
         multiPat = QMenu('Multiple Patients', self)
         chooseFiles = QAction('Choose multiple files', self)
@@ -94,11 +102,14 @@ class UiDialog(QDialog):
 
     def createGridGroupBox(self):
         self.resultFrame = QGroupBox("Data ")
-        self.frameLayout = QGridLayout()
+        #self.frame_grid = QGridLayout()
+        #self.data_print = QWidget()
+        self.main_frame = QHBoxLayout()
+        #self.data_print.setLayout(self.frame_grid)
         # resultLabel = QLabel(
         #     "Vrt\tLng\tLat\tRtn\tDate\tTime\tVrt (Moving Average)\tLng (Moving Average)\tLat (Moving Average)\tRtn (Moving Average)")
         # frameLayout.addWidget(resultLabel)
-        self.resultFrame.setLayout(self.frameLayout)
+        self.resultFrame.setLayout(self.main_frame)
 
     def createPlotFrame(self):
         self.plotFrame = QGroupBox(" ")
@@ -130,48 +141,35 @@ class UiDialog(QDialog):
         self.plotFrame.setLayout(self.plotLayout)
 
     def fillTable(self):
-        stuff = read_odt(self.threshold)
-        self.tabR = stuff[0]
-        self.tabC = stuff[1]
-        self.table = stuff[2]
-        QWidget().setLayout(self.frameLayout)
-        self.frameLayout = QGridLayout(self)
-        self.vrt.clear()
-        self.lng.clear()
-        self.lat.clear()
-        self.rtn.clear()
-        self.dates.clear()
-        for row in range(0, self.tabR):
-            if row > 2:
-                try:
-                    vr = float(self.table[row][0])
-                    self.vrt.append(vr)
-                except ValueError:
-                    pass
-                try:
-                    ln = float(self.table[row][1])
-                    self.lng.append(ln)
-                except ValueError:
-                    pass
-                try:
-                    la = float(self.table[row][2])
-                    self.lat.append(la)
-                except ValueError:
-                    pass
-                try:
-                    rt = float(self.table[row][3])
-                    self.rtn.append(rt)
-                except ValueError:
-                    pass
-                self.dates.append(self.table[row][4])
-            for col in range(0, self.tabC):
-                self.frameLayout.addWidget(QLabel(str(self.table[row][col])), row, col)
-                # print(self.table[row][col])
+        #self.data_print = QWidget()
+        #self.data_print.setMinimumWidth(400)
+        # self.data_print.setFixedHeight(300)
+        #QWidget().setLayout(self.frame_grid)
+        data_print = QWidget()
+        frame_grid = QGridLayout()
+        QWidget().setLayout(self.main_frame)
+        self.main_frame = QHBoxLayout()
 
-        self.resultFrame.setLayout(self.frameLayout)
-        self.cbVrt.toggle()
-        if not self.cbVrt.checkState():
-            self.cbVrt.toggle()
+        frame_grid.addWidget(QLabel("Filename"), 0, 0)
+        frame_grid.addWidget(QLabel("Mean vrt"), 0, 1)
+        frame_grid.addWidget(QLabel("Mean lng"), 0, 2)
+        frame_grid.addWidget(QLabel("Mean lat"), 0, 3)
+        frame_grid.addWidget(QLabel("Mean rtn"), 0, 4)
+
+        for row in range(0, len(self.mean_table)):
+            frame_grid.addWidget(QLabel(self.filenames[row]), row + 1, 0)
+            for col in range(0, len(self.mean_table[row])):
+                tmp = str(self.mean_table[row][col]) + u"\u00B1" + str(self.std_table[row][col])
+                frame_grid.addWidget(QLabel(tmp), row + 1, col + 1)
+
+        data_print.setLayout(frame_grid)
+
+        scroll = QScrollArea()
+        scroll.setWidget(data_print)
+
+        self.main_frame.addWidget(scroll)
+        self.resultFrame.setLayout(self.main_frame)
+
 
     def drawVrt(self, state):
             if state == Qt.Checked:
@@ -219,15 +217,63 @@ class UiDialog(QDialog):
         root.withdraw()
         filez = filedialog.askopenfilenames(parent=root, filetypes=(("ODT files", "*.odt"), ("All files", "*")))
         if filez:
-            widget = MultiPatientsDialog(filez, self.threshold)
-            widget.exec_()
+            self.files_to_table(filez)
+            self.fillTable()
 
     def choose_dir_multi_patients(self):
         root = Tk()
         root.withdraw()
         directory = filedialog.askdirectory(parent=root)
-        files = [f for f in listdir(directory) if isfile(join(directory, f))]
+        files = [f for f in os.listdir(directory) if isfile(join(directory, f))]
         filez = [directory + "/" + f for f in files]
         if filez:
-            widget = MultiPatientsDialog(filez, self.threshold)
-            widget.exec_()
+            self.files_to_table(filez)
+            self.fillTable()
+
+    def files_to_table(self, filez):
+        self.table.clear()
+        self.filenames.clear()
+        self.mean_table.clear()
+        self.std_table.clear()
+        for file in filez:
+            self.table.append(ReadOdt.read_table(file, self.threshold)[2])
+            self.filenames.append(os.path.split(file)[1])
+
+        for i in range(0, len(self.table)):
+            tmp = ReadOdt.calculate_avg_stdev(self.table[i])
+            self.mean_table.append(tmp[0])
+            self.std_table.append(tmp[1])
+
+        self.tables_to_separate()
+
+    def tables_to_separate(self):
+        self.vrt.clear()
+        self.lng.clear()
+        self.lat.clear()
+        self.rtn.clear()
+
+        self.vrt_error.clear()
+        self.lng_error.clear()
+        self.lat_error.clear()
+        self.rtn_error.clear()
+
+        for row in self.mean_table:
+            self.vrt.append(row[0])
+            self.lng.append(row[1])
+            self.lat.append(row[2])
+            self.rtn.append(row[3])
+
+        for row in self.std_table:
+            self.vrt_error.append(row[0])
+            self.lng_error.append(row[1])
+            self.lat_error.append(row[2])
+            self.rtn_error.append(row[3])
+
+    def single_pat(self):
+        root = Tk()
+        root.withdraw()
+        file = filedialog.askopenfilename(parent=root, filetypes=(("ODT files", "*.odt"), ("All files", "*")))
+
+        if file:
+            self.widget = SinglePatientWindow(file, self.threshold)
+            self.widget.exec()

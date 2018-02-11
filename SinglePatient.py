@@ -1,43 +1,43 @@
+from PyQt5.QtGui import QWindow
 from PyQt5.QtWidgets import (QWidget, QDialog, QDialogButtonBox, QGridLayout, QGroupBox, QLabel, QMenu, QMenuBar,
                              QTextEdit, QHBoxLayout, QScrollBar,
-                             QVBoxLayout, QAction, QApplication, QCheckBox, QScrollArea)
+                             QVBoxLayout, QAction, QApplication, QCheckBox, QScrollArea, QMainWindow)
 import ReadOdt
 import os
 from PlotCanvas import PlotCanvas
 from PyQt5.QtCore import Qt
 
 
-class MultiPatientsDialog(QDialog):
+class SinglePatientWindow(QDialog):
     toplot = [[], [], [], []]
     vrt = []
     lng = []
     lat = []
     rtn = []
+    filenames = []
 
-    def __init__(self, filez, threshold):
-        super(MultiPatientsDialog, self).__init__()
+    def __init__(self, file, threshold):
+        super(SinglePatientWindow, self).__init__()
+
         self.threshold = threshold
-        self.table = []
-        self.mean_table = []
-        self.std_table = []
-        self.filenames = []
-        for file in filez:
-            self.table.append(ReadOdt.read_table(file, self.threshold)[2])
-            self.filenames.append(os.path.split(file)[1])
-
-        for i in range(0, len(self.table)):
-            tmp = ReadOdt.calculate_avg_stdev(self.table[i])
-            self.mean_table.append(tmp[0])
-            self.std_table.append(tmp[1])
-
+        self.table = ReadOdt.read_table(file, self.threshold)[2]
+        [self.mean_table, self.std_table] = ReadOdt.calculate_avg_stdev(self.table)
         self.tables_to_separate()
+        #self.mean_table = []
+        #self.std_table = []
+        #self.filenames = []
+        #for file in file:
+         #   self.table.append(ReadOdt.read_table(file, self.threshold)[2])
+         #   self.filenames.append(os.path.split(file)[1])
+        self.filename = os.path.split(file)[1]
+        self.setWindowTitle(self.filename)
 
         mainLayout = QVBoxLayout()
         self.create_data()
         mainLayout.addWidget(self.resultFrame)
 
-        self.createPlotFrame()
-        mainLayout.addWidget(self.plotFrame)
+        #self.createPlotFrame()
+        #mainLayout.addWidget(self.plotFrame)
 
         self.setLayout(mainLayout)
 
@@ -51,17 +51,10 @@ class MultiPatientsDialog(QDialog):
         self.frameLayout = QGridLayout()
         self.main_frame = QHBoxLayout()
 
-        self.frameLayout.addWidget(QLabel("Filename"), 0, 0)
-        self.frameLayout.addWidget(QLabel("Mean vrt"), 0, 1)
-        self.frameLayout.addWidget(QLabel("Mean lng"), 0, 2)
-        self.frameLayout.addWidget(QLabel("Mean lat"), 0, 3)
-        self.frameLayout.addWidget(QLabel("Mean rtn"), 0, 4)
-
-        for row in range(0, len(self.mean_table)):
-            self.frameLayout.addWidget(QLabel(self.filenames[row]), row + 1, 0)
-            for col in range(0, len(self.mean_table[row])):
-                tmp = str(self.mean_table[row][col]) + u"\u00B1" + str(self.std_table[row][col])
-                self.frameLayout.addWidget(QLabel(tmp), row + 1, col+1)
+        for row in range(0, len(self.table)):
+            for col in range(0, len(self.table[0])):
+                self.frameLayout.addWidget(QLabel(str(self.table[row][col])), row, col)
+                #print(self.table[row][col])
 
         self.data_print.setLayout(self.frameLayout)
 
@@ -72,12 +65,27 @@ class MultiPatientsDialog(QDialog):
         self.resultFrame.setLayout(self.main_frame)
 
     def tables_to_separate(self):
-        print("Trying to do separate tables")
-        for row in self.mean_table:
-            self.vrt.append(row[0])
-            self.lng.append(row[1])
-            self.lat.append(row[2])
-            self.rtn.append(row[3])
+        for row in range(ReadOdt.TABLE_DATA_ROW, len(self.table)):
+            try:
+                vr = float(self.table[row][0])
+                self.vrt.append(vr)
+            except ValueError:
+                pass
+            try:
+                ln = float(self.table[row][1])
+                self.lng.append(ln)
+            except ValueError:
+                pass
+            try:
+                la = float(self.table[row][2])
+                self.lat.append(la)
+            except ValueError:
+                pass
+            try:
+                rt = float(self.table[row][3])
+                self.rtn.append(rt)
+            except ValueError:
+                pass
 
 
     def createPlotFrame(self):

@@ -6,8 +6,6 @@ from math import fabs
 import numpy as np
 from PyQt5.QtWidgets import QDialog
 
-# global variable that holds the value of the treshold [cm]
-#THRESH = 0.3
 # this is the row data in the table starts on
 TABLE_DATA_ROW = 3
 #this is the number of sessions after which corrections were applied
