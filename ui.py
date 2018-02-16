@@ -1,6 +1,6 @@
 from PyQt5.QtWidgets import (QWidget, QDialog, QDialogButtonBox, QGridLayout, QGroupBox, QLabel, QMenu, QMenuBar,
                              QTextEdit,
-                             QVBoxLayout, QAction, QApplication, QCheckBox, QHBoxLayout, QScrollArea)
+                             QVBoxLayout, QAction, QApplication, QCheckBox, QHBoxLayout, QScrollArea, QMainWindow)
 import ReadOdt
 from PlotCanvas import PlotCanvas
 from PyQt5.QtCore import Qt
@@ -10,7 +10,6 @@ from tkinter import Tk
 from SinglePatient import SinglePatientWindow
 import os
 from os.path import isfile, join
-
 
 
 class UiDialog(QDialog):
@@ -98,7 +97,7 @@ class UiDialog(QDialog):
 
         self.menuBar.addMenu(self.edit_menu)
 
-        self.exitAction.triggered.connect(self.accept)
+        #self.exitAction.triggered.connect(self.accept)
 
     def createGridGroupBox(self):
         self.resultFrame = QGroupBox("Data ")
@@ -276,4 +275,4 @@ class UiDialog(QDialog):
 
         if file:
             self.widget = SinglePatientWindow(file, self.threshold)
-            self.widget.exec()
+            self.widget.show()
