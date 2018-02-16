@@ -26,6 +26,7 @@ class UiDialog(QDialog):
     lat_error = []
     rtn_error = []
     toplot = [[], [], [], []]
+    toplot_errors = [[], [], [], []]
     dates = []
     threshold = 0.3
     table = []
@@ -62,10 +63,7 @@ class UiDialog(QDialog):
         # self.saveAct = self.fileMenu.addAction(self,QAction("&Save", self, shortcut=QKeySequence.Save,
         # statusTip="Save the document to disk", triggered=self.save))
         impMenu = QMenu('Import', self)
-        impAct = QAction('Single Patient', self)
-        #manAct = QAction('Multiple Patients', self)
-        impMenu.addAction(impAct)
-        impAct.triggered.connect(self.single_pat)
+
 
         multiPat = QMenu('Multiple Patients', self)
         chooseFiles = QAction('Choose multiple files', self)
@@ -76,6 +74,12 @@ class UiDialog(QDialog):
         chooseFolder.triggered.connect(self.choose_dir_multi_patients)
 
         impMenu.addMenu(multiPat)
+
+        impAct = QAction('Single Patient', self)
+        # manAct = QAction('Multiple Patients', self)
+        impMenu.addAction(impAct)
+        impAct.triggered.connect(self.single_pat)
+
         #impMenu.addAction(manAct)
         self.fileMenu.addMenu(impMenu)
         # self.saveAction = self.fileMenu.addAction("&Save")
@@ -173,34 +177,50 @@ class UiDialog(QDialog):
     def drawVrt(self, state):
             if state == Qt.Checked:
                 self.toplot[0] = self.vrt
-                self.m.plotChecked(self.toplot, self.dates)
+                self.toplot_errors[0] = self.vrt_error
+
+                self.m.plot_checked_errors(self.toplot, self.toplot_errors, self.filenames)
             else:
                 self.toplot[0] = []
-                self.m.plotChecked(self.toplot, self.dates)
+                self.toplot_errors[0] = []
+
+                self.m.plot_checked_errors(self.toplot, self.toplot_errors, self.filenames)
 
     def drawLng(self, state):
             if state == Qt.Checked:
                 self.toplot[1] = self.lng
-                self.m.plotChecked(self.toplot, self.dates)
+                self.toplot_errors[1] = self.lng_error
+
+                self.m.plot_checked_errors(self.toplot, self.toplot_errors, self.filenames)
             else:
                 self.toplot[1] = []
-                self.m.plotChecked(self.toplot, self.dates)
+                self.toplot_errors[1] = []
+
+                self.m.plot_checked_errors(self.toplot, self.toplot_errors, self.filenames)
 
     def drawLat(self, state):
             if state == Qt.Checked:
                 self.toplot[2] = self.lat
-                self.m.plotChecked(self.toplot, self.dates)
+                self.toplot_errors[2] = self.lat_error
+
+                self.m.plot_checked_errors(self.toplot, self.toplot_errors, self.filenames)
             else:
                 self.toplot[2] = []
-                self.m.plotChecked(self.toplot, self.dates)
+                self.toplot_errors[2] = []
+
+                self.m.plot_checked_errors(self.toplot, self.toplot_errors, self.filenames)
 
     def drawRtn(self, state):
             if state == Qt.Checked:
                 self.toplot[3] = self.rtn
-                self.m.plotChecked(self.toplot, self.dates)
+                self.toplot_errors[3] = self.rtn_error
+
+                self.m.plot_checked_errors(self.toplot, self.toplot_errors, self.filenames)
             else:
                 self.toplot[3] = []
-                self.m.plotChecked(self.toplot, self.dates)
+                self.toplot_errors[3] = []
+
+                self.m.plot_checked_errors(self.toplot, self.toplot_errors, self.filenames)
 
     def change_thresh(self, value):
         self.threshold = value
