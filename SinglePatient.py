@@ -45,6 +45,9 @@ class FormWidget(QWidget):
         self.create_data()
         mainLayout.addWidget(self.resultFrame)
 
+        self.add_means()
+        mainLayout.addWidget(self.mean_frame)
+
         self.createPlotFrame()
         mainLayout.addWidget(self.plotFrame)
 
@@ -75,6 +78,24 @@ class FormWidget(QWidget):
 
         self.main_frame.addWidget(scroll)
         self.resultFrame.setLayout(self.main_frame)
+
+    def add_means(self):
+        self.mean_frame = QGroupBox(" ")
+        self.mean_layout = QGridLayout()
+        self.mean_layout.addWidget(QLabel("Vrt"), 0, 1)
+        self.mean_layout.addWidget(QLabel("Lng"), 0, 2)
+        self.mean_layout.addWidget(QLabel("Lat"), 0, 3)
+        self.mean_layout.addWidget(QLabel("Rtn"), 0, 4)
+
+        self.mean_layout.addWidget(QLabel("Mean"), 1, 0)
+        self.mean_layout.addWidget(QLabel("Std"), 2, 0)
+
+        [mean, std] = ReadOdt.calculate_avg_stdev(self.table)
+        for i in range(1, 5):
+            self.mean_layout.addWidget(QLabel(str(mean[i-1])), 1, i)
+            self.mean_layout.addWidget(QLabel(str(std[i-1])), 2, i)
+
+        self.mean_frame.setLayout(self.mean_layout)
 
     def tables_to_separate(self):
         self.vrt.clear()

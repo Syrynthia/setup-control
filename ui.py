@@ -1,3 +1,4 @@
+import sys
 from PyQt5.QtWidgets import (QWidget, QDialog, QDialogButtonBox, QGridLayout, QGroupBox, QLabel, QMenu, QMenuBar,
                              QTextEdit,
                              QVBoxLayout, QAction, QApplication, QCheckBox, QHBoxLayout, QScrollArea, QMainWindow)
@@ -10,7 +11,7 @@ from tkinter import Tk
 from SinglePatient import SinglePatientWindow
 import os
 from os.path import isfile, join
-
+import csv
 
 class UiDialog(QDialog):
     #ates = ["Date", "Time", "Vrt", "Lng", "Lat", "Rtn"]
@@ -86,7 +87,8 @@ class UiDialog(QDialog):
         saveMenu = QMenu('Save As...', self)
         pdfAct = QAction('.odt file', self)
         csvAct = QAction('.csv file', self)
-        saveMenu.addAction(pdfAct)
+        csvAct.triggered.connect(self.save_csv)
+        #saveMenu.addAction(pdfAct)
         saveMenu.addAction(csvAct)
         self.fileMenu.addMenu(saveMenu)
         self.fileMenu.addAction(QAction('Help', self))
@@ -296,3 +298,28 @@ class UiDialog(QDialog):
         if file:
             self.widget = SinglePatientWindow(file, self.threshold)
             self.widget.show()
+
+    def save_csv(self):
+        root = Tk()
+        root.withdraw()
+        file = filedialog.asksaveasfile(parent=root, filetypes=(("CSV files", "*.csv"), ("All files", "*")),
+                                        title='Save file...',
+                                        defaultextension='.csv')
+        #print(file.name)
+
+        #if file:
+        with open(file.name, 'w') as csvfile:
+            #print('csv open')
+            csvwriter = csv.writer(csvfile, delimiter=' ',
+                                    quotechar='|', quoting=csv.QUOTE_MINIMAL)
+            #print('writer created')
+            csvwriter.writerow(['Filenames', 'Mean vrt', 'Mean lng', 'Mean lat', 'Mean rtn', 'Std vrt', 'Std lng', 'Std lat', 'Std rtn'])
+            #print("written titles")
+
+            for row in range(0, len(self.mean_table)):
+
+                tmp = [self.filenames[row]]
+                tmp.extend(self.mean_table[row][:])
+                tmp.extend(self.std_table[row][:])
+
+                csvwriter.writerow(tmp)
