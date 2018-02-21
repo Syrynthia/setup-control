@@ -4,6 +4,7 @@ import sys
 from PyQt5.QtWidgets import QSizePolicy, QDialog, QWidget, QGridLayout, QVBoxLayout
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
+from math import ceil
 
 import ui
 
@@ -44,8 +45,9 @@ class PlotCanvas(FigureCanvas):
             ax.plot(data[i], colors[i])
         ax.set_ylabel('distance from isocenter [cm]')
         ax.plot(x, line, 'r-')
-        ax.set_xticks(x)
-        ax.set_xticklabels(labels, rotation=15)
+        step = ceil(length / 10)
+        ax.set_xticks(x[::step])
+        ax.set_xticklabels(labels[::step], rotation=15)
         self.draw()
 
     def plot_checked_errors(self, data, errors, labels):
@@ -61,7 +63,8 @@ class PlotCanvas(FigureCanvas):
                 ax.errorbar(x, data[i], yerr=errors[i], fmt=colors[i])
         ax.set_ylabel('distance from isocenter [cm]')
         ax.plot(x, line, 'r-')
-        ax.set_xticks(x)
-        ax.set_xticklabels(labels, rotation=15)
+        step = ceil(length/10)
+        ax.set_xticks(x[::step])
+        ax.set_xticklabels(labels[::step], rotation=15)
         self.draw()
 

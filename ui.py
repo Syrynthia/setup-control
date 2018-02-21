@@ -120,7 +120,7 @@ class UiDialog(QDialog):
         self.plotFrame = QGroupBox(" ")
         self.plotFrame.setStyleSheet("border:0;")
         self.plotLayout = QGridLayout()
-        self.m = PlotCanvas(self, width=7, height=5)
+        self.m = PlotCanvas(self, width=7, height=6)
         self.plotLayout.addWidget(self.m, 0, 0)
 
         self.checkboxes = QGroupBox("")
