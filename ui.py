@@ -30,10 +30,13 @@ class UiDialog(QDialog):
     toplot_errors = [[], [], [], []]
     dates = []
     threshold = 0.3
+    correction_sessions = 3
+    mean_sessions = 0
     table = []
     mean_table = []
     std_table = []
     filenames = []
+    filez = []
 
     def __init__(self):
         super(UiDialog, self).__init__()
@@ -228,40 +231,46 @@ class UiDialog(QDialog):
         self.threshold = value
 
     def preferences(self):
-        widget = PreferencesDialog(self.threshold)
+        widget = PreferencesDialog(self.threshold, self.correction_sessions, self.mean_sessions)
         widget.exec_()
         self.threshold = widget.get_threshold()
-        print(self.threshold)
+        self.correction_sessions = widget.get_correction_sessions()
+        self.mean_sessions = widget.get_mean_sessions()
+
+        self.files_to_table()
+        self.fillTable()
 
     def choose_multi_patients(self):
+        self.filez.clear()
         root = Tk()
         root.withdraw()
-        filez = filedialog.askopenfilenames(parent=root, filetypes=(("ODT files", "*.odt"), ("All files", "*")))
-        if filez:
-            self.files_to_table(filez)
+        self.filez = filedialog.askopenfilenames(parent=root, filetypes=(("ODT files", "*.odt"), ("All files", "*")))
+        if self.filez:
+            self.files_to_table()
             self.fillTable()
 
     def choose_dir_multi_patients(self):
+        self.filez = []
         root = Tk()
         root.withdraw()
         directory = filedialog.askdirectory(parent=root)
         files = [f for f in os.listdir(directory) if isfile(join(directory, f))]
-        filez = [directory + "/" + f for f in files]
-        if filez:
-            self.files_to_table(filez)
+        self.filez = [directory + "/" + f for f in files]
+        if self.filez:
+            self.files_to_table()
             self.fillTable()
 
-    def files_to_table(self, filez):
+    def files_to_table(self):
         self.table.clear()
         self.filenames.clear()
         self.mean_table.clear()
         self.std_table.clear()
-        for file in filez:
-            self.table.append(ReadOdt.read_table(file, self.threshold)[2])
+        for file in self.filez:
+            self.table.append(ReadOdt.read_table(file, self.threshold, self.correction_sessions)[2])
             self.filenames.append(os.path.split(file)[1])
 
         for i in range(0, len(self.table)):
-            tmp = ReadOdt.calculate_avg_stdev(self.table[i])
+            tmp = ReadOdt.calculate_avg_stdev(self.table[i], self.mean_sessions)
             self.mean_table.append(tmp[0])
             self.std_table.append(tmp[1])
 

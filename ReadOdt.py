@@ -26,7 +26,7 @@ def read_odt(threshold):
     return [row, col, table]
 
 
-def read_table(filez, threshold):
+def read_table(filez, threshold, correction_sessions):
     #print("read threshold " + str(threshold))
     table = [[0] * 1 for i in range(0, 1)]
     doc = load(filez)
@@ -44,7 +44,7 @@ def read_table(filez, threshold):
             string = str(tab.getElementsByType(TableRow)[i].getElementsByType(TableCell)[j])
             table[i][j] = string
 
-    for i in range(TABLE_DATA_ROW+SESSION_NUM, row):
+    for i in range(TABLE_DATA_ROW+correction_sessions, row):
         vrtAv = float(table[i - 1][6])
         lngAv = float(table[i - 1][7])
         latAv = float(table[i - 1][8])
@@ -76,12 +76,18 @@ def read_table(filez, threshold):
         return [row, col, table]
 
 
-def calculate_avg_stdev(table):
+def calculate_avg_stdev(table, mean_number):
     vrt = []
     lng = []
     lat = []
     rtn = []
-    for row in range(TABLE_DATA_ROW, len(table)):
+
+    if mean_number == 0 or len(table) < mean_number:
+        length = len(table)
+    else:
+        length = mean_number
+
+    for row in range(TABLE_DATA_ROW, length):
         try:
             vr = float(table[row][0])
             vrt.append(vr)
