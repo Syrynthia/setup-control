@@ -159,10 +159,10 @@ class UiDialog(QDialog):
         self.main_frame = QHBoxLayout()
 
         frame_grid.addWidget(QLabel("Filename"), 0, 0)
-        frame_grid.addWidget(QLabel("Mean vrt"), 0, 1)
-        frame_grid.addWidget(QLabel("Mean lng"), 0, 2)
-        frame_grid.addWidget(QLabel("Mean lat"), 0, 3)
-        frame_grid.addWidget(QLabel("Mean rtn"), 0, 4)
+        frame_grid.addWidget(QLabel("Mean vrt [cm]"), 0, 1)
+        frame_grid.addWidget(QLabel("Mean lng [cm]"), 0, 2)
+        frame_grid.addWidget(QLabel("Mean lat [cm]"), 0, 3)
+        frame_grid.addWidget(QLabel("Mean rtn [cm]"), 0, 4)
 
         for row in range(0, len(self.mean_table)):
             frame_grid.addWidget(QLabel(self.filenames[row]), row + 1, 0)
@@ -305,7 +305,7 @@ class UiDialog(QDialog):
         file = filedialog.askopenfilename(parent=root, filetypes=(("ODT files", "*.odt"), ("All files", "*")))
 
         if file:
-            self.widget = SinglePatientWindow(file, self.threshold)
+            self.widget = SinglePatientWindow(file, self.threshold, self.correction_sessions, self.mean_sessions)
             self.widget.show()
 
     def save_csv(self):
@@ -316,19 +316,19 @@ class UiDialog(QDialog):
                                         defaultextension='.csv')
         #print(file.name)
 
-        #if file:
-        with open(file.name, 'w') as csvfile:
-            #print('csv open')
-            csvwriter = csv.writer(csvfile, delimiter=' ',
-                                    quotechar='|', quoting=csv.QUOTE_MINIMAL)
-            #print('writer created')
-            csvwriter.writerow(['Filenames', 'Mean vrt', 'Mean lng', 'Mean lat', 'Mean rtn', 'Std vrt', 'Std lng', 'Std lat', 'Std rtn'])
-            #print("written titles")
+        if file.name.endswith('.csv'):
+            with open(file.name, 'w') as csvfile:
+                #print('csv open')
+                csvwriter = csv.writer(csvfile, delimiter=' ',
+                                        quotechar='|', quoting=csv.QUOTE_MINIMAL)
+                #print('writer created')
+                csvwriter.writerow(['Filenames', 'Mean vrt', 'Mean lng', 'Mean lat', 'Mean rtn', 'Std vrt', 'Std lng', 'Std lat', 'Std rtn'])
+                #print("written titles")
 
-            for row in range(0, len(self.mean_table)):
+                for row in range(0, len(self.mean_table)):
 
-                tmp = [self.filenames[row]]
-                tmp.extend(self.mean_table[row][:])
-                tmp.extend(self.std_table[row][:])
+                    tmp = [self.filenames[row]]
+                    tmp.extend(self.mean_table[row][:])
+                    tmp.extend(self.std_table[row][:])
 
-                csvwriter.writerow(tmp)
+                    csvwriter.writerow(tmp)
