@@ -87,12 +87,14 @@ class UiDialog(QDialog):
         #impMenu.addAction(manAct)
         self.fileMenu.addMenu(impMenu)
         # self.saveAction = self.fileMenu.addAction("&Save")
-        saveMenu = QMenu('Save As...', self)
-        pdfAct = QAction('.odt file', self)
-        csvAct = QAction('.csv file', self)
+        saveMenu = QMenu('Save...', self)
+        pdfAct = QAction('plot', self)
+        csvAct = QAction('data to a .csv file', self)
         csvAct.triggered.connect(self.save_csv)
-        #saveMenu.addAction(pdfAct)
+        pdfAct.triggered.connect(self.save_plot)
+
         saveMenu.addAction(csvAct)
+        saveMenu.addAction(pdfAct)
         self.fileMenu.addMenu(saveMenu)
         self.fileMenu.addAction(QAction('Help', self))
         self.exitAction = self.fileMenu.addAction("E&xit")
@@ -332,3 +334,12 @@ class UiDialog(QDialog):
                     tmp.extend(self.std_table[row][:])
 
                     csvwriter.writerow(tmp)
+
+    def save_plot(self):
+        root = Tk()
+        root.withdraw()
+        file = filedialog.asksaveasfile(parent=root, filetypes=(("PNG files", "*.png"), ("All files", "*")),
+                                        title='Save file...',
+                                        defaultextension='.png')
+        if file:
+            self.m.save(file.name)
