@@ -1,7 +1,10 @@
 import sys
+
+from PyQt5.QtGui import QKeySequence
 from PyQt5.QtWidgets import (QWidget, QDialog, QDialogButtonBox, QGridLayout, QGroupBox, QLabel, QMenu, QMenuBar,
                              QTextEdit,
-                             QVBoxLayout, QAction, QApplication, QCheckBox, QHBoxLayout, QScrollArea, QMainWindow)
+                             QVBoxLayout, QAction, QApplication, QCheckBox, QHBoxLayout, QScrollArea, QMainWindow,
+                             QShortcut)
 import ReadOdt
 from PlotCanvas import PlotCanvas
 from PyQt5.QtCore import Qt
@@ -13,9 +16,10 @@ import os
 from os.path import isfile, join
 import csv
 
+
 class UiDialog(QDialog):
-    #ates = ["Date", "Time", "Vrt", "Lng", "Lat", "Rtn"]
-    #table = [[0] * 1 for i in range(0, 1)]
+    # ates = ["Date", "Time", "Vrt", "Lng", "Lat", "Rtn"]
+    # table = [[0] * 1 for i in range(0, 1)]
     tabR = 0
     tabC = 0
     vrt = []
@@ -50,7 +54,6 @@ class UiDialog(QDialog):
         # mainLayout.addWidget(bigEditor)
         # mainLayout.addWidget(buttonBox)
 
-
         # mainLayout.addWidget(self.m)
         mainLayout.addWidget(self.plotFrame)
 
@@ -68,10 +71,9 @@ class UiDialog(QDialog):
         # statusTip="Save the document to disk", triggered=self.save))
         impMenu = QMenu('Import', self)
 
-
         multiPat = QMenu('Multiple Patients', self)
-        chooseFiles = QAction('Choose multiple files', self)
-        chooseFolder = QAction('Choose folder', self)
+        chooseFiles = QAction('Choose multiple files', self, shortcut=QKeySequence("Ctrl+O"))
+        chooseFolder = QAction('Choose folder', self, shortcut=QKeySequence("Ctrl+F"))
         multiPat.addAction(chooseFiles)
         multiPat.addAction(chooseFolder)
         chooseFiles.triggered.connect(self.choose_multi_patients)
@@ -79,43 +81,41 @@ class UiDialog(QDialog):
 
         impMenu.addMenu(multiPat)
 
-        impAct = QAction('Single Patient', self)
-        # manAct = QAction('Multiple Patients', self)
+        impAct = QAction('Single Patient', self, shortcut=QKeySequence("Ctrl+A"))
         impMenu.addAction(impAct)
         impAct.triggered.connect(self.single_pat)
 
-        #impMenu.addAction(manAct)
         self.fileMenu.addMenu(impMenu)
-        # self.saveAction = self.fileMenu.addAction("&Save")
+
         saveMenu = QMenu('Save...', self)
-        pdfAct = QAction('plot', self)
-        csvAct = QAction('data to a .csv file', self)
+        pdfAct = QAction('plot', self, shortcut=QKeySequence("Ctrl+L"))
+        csvAct = QAction('data to a .csv file', self, shortcut=QKeySequence("Ctrl+S"))
         csvAct.triggered.connect(self.save_csv)
         pdfAct.triggered.connect(self.save_plot)
 
         saveMenu.addAction(csvAct)
         saveMenu.addAction(pdfAct)
         self.fileMenu.addMenu(saveMenu)
-        self.fileMenu.addAction(QAction('Help', self))
+        self.fileMenu.addAction(QAction('Help', self, shortcut=QKeySequence("Ctrl+H")))
         self.exitAction = self.fileMenu.addAction("E&xit")
 
         self.menuBar.addMenu(self.fileMenu)
 
         self.edit_menu = QMenu("&Edit", self)
-        pref_act = QAction("Preferences", self)
+        pref_act = QAction("Preferences", self, shortcut=QKeySequence("Ctrl+P"))
         pref_act.triggered.connect(self.preferences)
         self.edit_menu.addAction(pref_act)
 
         self.menuBar.addMenu(self.edit_menu)
 
-        #self.exitAction.triggered.connect(self.accept)
+        self.exitAction.triggered.connect(self.accept)
 
     def createGridGroupBox(self):
         self.resultFrame = QGroupBox("Data ")
-        #self.frame_grid = QGridLayout()
-        #self.data_print = QWidget()
+        # self.frame_grid = QGridLayout()
+        # self.data_print = QWidget()
         self.main_frame = QHBoxLayout()
-        #self.data_print.setLayout(self.frame_grid)
+        # self.data_print.setLayout(self.frame_grid)
         # resultLabel = QLabel(
         #     "Vrt\tLng\tLat\tRtn\tDate\tTime\tVrt (Moving Average)\tLng (Moving Average)\tLat (Moving Average)\tRtn (Moving Average)")
         # frameLayout.addWidget(resultLabel)
@@ -151,10 +151,10 @@ class UiDialog(QDialog):
         self.plotFrame.setLayout(self.plotLayout)
 
     def fillTable(self):
-        #self.data_print = QWidget()
-        #self.data_print.setMinimumWidth(400)
+        # self.data_print = QWidget()
+        # self.data_print.setMinimumWidth(400)
         # self.data_print.setFixedHeight(300)
-        #QWidget().setLayout(self.frame_grid)
+        # QWidget().setLayout(self.frame_grid)
         data_print = QWidget()
         frame_grid = QGridLayout()
         QWidget().setLayout(self.main_frame)
@@ -180,54 +180,53 @@ class UiDialog(QDialog):
         self.main_frame.addWidget(scroll)
         self.resultFrame.setLayout(self.main_frame)
 
-
     def drawVrt(self, state):
-            if state == Qt.Checked:
-                self.toplot[0] = self.vrt
-                self.toplot_errors[0] = self.vrt_error
+        if state == Qt.Checked:
+            self.toplot[0] = self.vrt
+            self.toplot_errors[0] = self.vrt_error
 
-                self.m.plot_checked_errors(self.toplot, self.toplot_errors, self.filenames)
-            else:
-                self.toplot[0] = []
-                self.toplot_errors[0] = []
+            self.m.plot_checked_errors(self.toplot, self.toplot_errors, self.filenames)
+        else:
+            self.toplot[0] = []
+            self.toplot_errors[0] = []
 
-                self.m.plot_checked_errors(self.toplot, self.toplot_errors, self.filenames)
+            self.m.plot_checked_errors(self.toplot, self.toplot_errors, self.filenames)
 
     def drawLng(self, state):
-            if state == Qt.Checked:
-                self.toplot[1] = self.lng
-                self.toplot_errors[1] = self.lng_error
+        if state == Qt.Checked:
+            self.toplot[1] = self.lng
+            self.toplot_errors[1] = self.lng_error
 
-                self.m.plot_checked_errors(self.toplot, self.toplot_errors, self.filenames)
-            else:
-                self.toplot[1] = []
-                self.toplot_errors[1] = []
+            self.m.plot_checked_errors(self.toplot, self.toplot_errors, self.filenames)
+        else:
+            self.toplot[1] = []
+            self.toplot_errors[1] = []
 
-                self.m.plot_checked_errors(self.toplot, self.toplot_errors, self.filenames)
+            self.m.plot_checked_errors(self.toplot, self.toplot_errors, self.filenames)
 
     def drawLat(self, state):
-            if state == Qt.Checked:
-                self.toplot[2] = self.lat
-                self.toplot_errors[2] = self.lat_error
+        if state == Qt.Checked:
+            self.toplot[2] = self.lat
+            self.toplot_errors[2] = self.lat_error
 
-                self.m.plot_checked_errors(self.toplot, self.toplot_errors, self.filenames)
-            else:
-                self.toplot[2] = []
-                self.toplot_errors[2] = []
+            self.m.plot_checked_errors(self.toplot, self.toplot_errors, self.filenames)
+        else:
+            self.toplot[2] = []
+            self.toplot_errors[2] = []
 
-                self.m.plot_checked_errors(self.toplot, self.toplot_errors, self.filenames)
+            self.m.plot_checked_errors(self.toplot, self.toplot_errors, self.filenames)
 
     def drawRtn(self, state):
-            if state == Qt.Checked:
-                self.toplot[3] = self.rtn
-                self.toplot_errors[3] = self.rtn_error
+        if state == Qt.Checked:
+            self.toplot[3] = self.rtn
+            self.toplot_errors[3] = self.rtn_error
 
-                self.m.plot_checked_errors(self.toplot, self.toplot_errors, self.filenames)
-            else:
-                self.toplot[3] = []
-                self.toplot_errors[3] = []
+            self.m.plot_checked_errors(self.toplot, self.toplot_errors, self.filenames)
+        else:
+            self.toplot[3] = []
+            self.toplot_errors[3] = []
 
-                self.m.plot_checked_errors(self.toplot, self.toplot_errors, self.filenames)
+            self.m.plot_checked_errors(self.toplot, self.toplot_errors, self.filenames)
 
     def change_thresh(self, value):
         self.threshold = value
@@ -268,8 +267,9 @@ class UiDialog(QDialog):
         self.mean_table.clear()
         self.std_table.clear()
         for file in self.filez:
-            self.table.append(ReadOdt.read_table(file, self.threshold, self.correction_sessions)[2])
-            self.filenames.append(os.path.split(file)[1])
+            if file.endswith('.odt'):
+                self.table.append(ReadOdt.read_table(file, self.threshold, self.correction_sessions)[2])
+                self.filenames.append(os.path.split(file)[1])
 
         for i in range(0, len(self.table)):
             tmp = ReadOdt.calculate_avg_stdev(self.table[i], self.mean_sessions)
@@ -316,19 +316,20 @@ class UiDialog(QDialog):
         file = filedialog.asksaveasfile(parent=root, filetypes=(("CSV files", "*.csv"), ("All files", "*")),
                                         title='Save file...',
                                         defaultextension='.csv')
-        #print(file.name)
+        # print(file.name)
 
-        if file.name.endswith('.csv'):
+        if file and file.name.endswith('.csv'):
             with open(file.name, 'w') as csvfile:
-                #print('csv open')
-                csvwriter = csv.writer(csvfile, delimiter=' ',
-                                        quotechar='|', quoting=csv.QUOTE_MINIMAL)
-                #print('writer created')
-                csvwriter.writerow(['Filenames', 'Mean vrt', 'Mean lng', 'Mean lat', 'Mean rtn', 'Std vrt', 'Std lng', 'Std lat', 'Std rtn'])
-                #print("written titles")
+                # print('csv open')
+                csvwriter = csv.writer(csvfile, delimiter=' ')  # ,
+                # quotechar='|', quoting=csv.QUOTE_MINIMAL)
+                # print('writer created')
+                csvwriter.writerow(
+                    ['Filenames', 'Mean vrt', 'Mean lng', 'Mean lat', 'Mean rtn', 'Std vrt', 'Std lng', 'Std lat',
+                     'Std rtn'])
+                # print("written titles")
 
                 for row in range(0, len(self.mean_table)):
-
                     tmp = [self.filenames[row]]
                     tmp.extend(self.mean_table[row][:])
                     tmp.extend(self.std_table[row][:])
@@ -338,8 +339,11 @@ class UiDialog(QDialog):
     def save_plot(self):
         root = Tk()
         root.withdraw()
-        file = filedialog.asksaveasfile(parent=root, filetypes=(("PNG files", "*.png"), ("All files", "*")),
+        file = filedialog.asksaveasfile(parent=root, filetypes=(("PNG files", "*.png"), ("PDF files", "*.pdf"),
+                                                                ("SVG files", "*.svg"), ("PS files", "*.ps"),
+                                                                ("EPS files", "*.eps"), ("All files", "*")),
                                         title='Save file...',
                                         defaultextension='.png')
-        if file:
+        ext = [".png", ".pdf", ".svg", ".ps", ".eps"]
+        if file and file.name.endswith(tuple(ext)):
             self.m.save(file.name)
