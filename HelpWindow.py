@@ -5,6 +5,7 @@ from PyQt5.QtWidgets import QMainWindow, QWidget, QVBoxLayout, QTabWidget, QText
 
 import ui
 from EnglishWidget import EnglishWidget
+from PolishWidget import PolishWidget
 
 
 class HelpWindow(QMainWindow):
@@ -39,16 +40,7 @@ class HelpWidget(QWidget):
         self.tabs = QTabWidget()
 
         self.english = EnglishWidget(self, self.main_img, self.single_img, self.pref_img)
-        self.create_polish_tab()
+        self.polski = PolishWidget(self, self.main_img, self.single_img, self.pref_img)
 
         self.tabs.addTab(self.english, "English")
         self.tabs.addTab(self.polski, "Polski")
-
-
-    def create_polish_tab(self):
-        self.polski = QWidget()
-
-app = ui.QApplication(sys.argv)
-dialog = HelpWindow()
-dialog.show()
-sys.exit(app.exec_())
