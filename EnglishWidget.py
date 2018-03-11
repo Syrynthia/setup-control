@@ -1,3 +1,4 @@
+from PyQt5.QtGui import QTextCursor
 from PyQt5.QtWidgets import QWidget, QTextEdit, QVBoxLayout
 
 
@@ -115,5 +116,6 @@ class EnglishWidget(QWidget):
                                           '</tr>'
                                           '</table>')
 
+        text_edit.moveCursor(QTextCursor.Start)
         tab_layout.addWidget(text_edit)
         self.setLayout(tab_layout)

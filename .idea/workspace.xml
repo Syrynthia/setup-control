@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="76684e57-e905-4253-8464-bbeccddef29c" name="Default" comment="Plot added">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/PlotCanvas.py" afterPath="$PROJECT_DIR$/PlotCanvas.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui.py" afterPath="$PROJECT_DIR$/ui.py" />
+    <list default="true" id="76684e57-e905-4253-8464-bbeccddef29c" name="Default" comment="Preferences window added&#10;plot for multiple patients added. needs fixes">
+      <change beforePath="" afterPath="$PROJECT_DIR$/PolishWidget.py" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change beforePath="$PROJECT_DIR$/EnglishWidget.py" afterPath="$PROJECT_DIR$/EnglishWidget.py" />
+      <change beforePath="$PROJECT_DIR$/HelpWindow.py" afterPath="$PROJECT_DIR$/HelpWindow.py" />
+      <change beforePath="$PROJECT_DIR$/ui.py" afterPath="$PROJECT_DIR$/ui.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -15,11 +17,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="main.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="main.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="7" column="0" lean-forward="false" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+            <state relative-caret-position="102">
+              <caret line="7" column="22" lean-forward="false" selection-start-line="7" selection-start-column="22" selection-end-line="7" selection-end-column="22" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
@@ -30,22 +32,46 @@
       <file leaf-file-name="ui.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ui.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="969">
-              <caret line="62" column="54" lean-forward="false" selection-start-line="62" selection-start-column="54" selection-end-line="62" selection-end-column="54" />
+            <state relative-caret-position="439">
+              <caret line="101" column="44" lean-forward="false" selection-start-line="101" selection-start-column="44" selection-end-line="101" selection-end-column="44" />
               <folding>
-                <element signature="e#0#229#0" expanded="true" />
+                <element signature="e#0#10#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PlotCanvas.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/PlotCanvas.py">
+      <file leaf-file-name="HelpWindow.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/HelpWindow.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="612">
-              <caret line="40" column="61" lean-forward="false" selection-start-line="40" selection-start-column="61" selection-end-line="40" selection-end-column="61" />
+            <state relative-caret-position="286">
+              <caret line="25" column="48" lean-forward="true" selection-start-line="25" selection-start-column="48" selection-end-line="25" selection-end-column="48" />
               <folding>
-                <element signature="e#0#13#0" expanded="true" />
+                <element signature="e#0#10#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="EnglishWidget.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/EnglishWidget.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="626">
+              <caret line="118" column="34" lean-forward="false" selection-start-line="118" selection-start-column="34" selection-end-line="118" selection-end-column="34" />
+              <folding>
+                <element signature="e#0#35#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PolishWidget.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/PolishWidget.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="609">
+              <caret line="119" column="8" lean-forward="true" selection-start-line="119" selection-start-column="8" selection-end-line="119" selection-end-column="47" />
+              <folding>
+                <element signature="e#0#35#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -54,10 +80,46 @@
       <file leaf-file-name="ReadOdt.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ReadOdt.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="15" column="78" lean-forward="false" selection-start-line="15" selection-start-column="78" selection-end-line="15" selection-end-column="78" />
+            <state relative-caret-position="1054">
+              <caret line="68" column="4" lean-forward="false" selection-start-line="68" selection-start-column="4" selection-end-line="68" selection-end-column="4" />
               <folding>
                 <element signature="e#0#33#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SinglePatient.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/SinglePatient.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="3230">
+              <caret line="202" column="29" lean-forward="false" selection-start-line="199" selection-start-column="8" selection-end-line="202" selection-end-column="29" />
+              <folding>
+                <element signature="e#0#10#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Preferences.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Preferences.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1972">
+              <caret line="124" column="0" lean-forward="false" selection-start-line="124" selection-start-column="0" selection-end-line="124" selection-end-column="0" />
+              <folding>
+                <element signature="e#0#55#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PlotCanvas.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/PlotCanvas.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="748">
+              <caret line="52" column="56" lean-forward="false" selection-start-line="52" selection-start-column="56" selection-end-line="52" selection-end-column="56" />
+              <folding>
+                <element signature="e#0#13#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -76,6 +138,7 @@
     <findStrings>
       <find>for i in range\(6\)\:\n            label \= QLabel\(\&quot;\%s\:\&quot; \% UiDialog\.labels\[i\]\)\n            lineEdit \= QLineEdit\(\)\n            layout\.addWidget\(label\, i\, 0\)\n            layout\.addWidget\(lineEdit\, i\, 1\)</find>
       <find>from PyQt5\.QtWidgets import \(QWidget\, QDialog\, QDialogButtonBox\, QGridLayout\, QGroupBox\, QLabel\, QMenu\, QMenuBar\, QTextEdit\,\n                             QVBoxLayout\, QAction\, QApplication\)\nfrom ReadOdt import readOdt\nfrom PlotCanvas import PlotCanvas\n\nclass UiDialog\(QDialog\)\:\n    labels \= \[\&quot;Date\&quot;\, \&quot;Time\&quot;\, \&quot;Vrt\&quot;\, \&quot;Lng\&quot;\, \&quot;Lat\&quot;\, \&quot;Rtn\&quot;\]\n    table \= \[\[0\] \* 1 for i in range\(0\, 1\)\]\n    tabR \= 0\n    tabC \= 0\n\n    def __init__\(self\)\:\n        super\(UiDialog\, self\)\.__init__\(\)\n        self\.createMenu\(\)\n        self\.createGridGroupBox\(\)\n        self\.createPlotFrame\(\)\n\n        bigEditor \= QTextEdit\(\)\n        bigEditor\.setPlainText\(\&quot;Here is where the plot of moving averages will be\&quot;\)\n\n        buttonBox \= QDialogButtonBox\(QDialogButtonBox\.Close\)\n\n        mainLayout \= QVBoxLayout\(\)\n        mainLayout\.setMenuBar\(self\.menuBar\)\n        mainLayout\.addWidget\(self\.resultFrame\)\n        \#mainLayout\.addWidget\(bigEditor\)\n        \#mainLayout\.addWidget\(buttonBox\)\n\n\n        \#mainLayout\.addWidget\(self\.m\)\n        mainLayout\.addWidget\(self\.plotFrame\)\n\n        self\.setLayout\(mainLayout\)\n\n        self\.setWindowTitle\(\&quot;Setup control\&quot;\)\n\n    def createMenu\(self\)\:\n        self\.menuBar \= QMenuBar\(\)\n\n        self\.fileMenu \= QMenu\(\&quot;\&amp;File\&quot;\, self\)\n        \# self\.openAct \= self\.fileMenu\.addAction\(self\,QAction\(\&quot;\&amp;Open\.\.\.\&quot;\, self\, shortcut\=QKeySequence\.Open\,\n        \# statusTip\=\&quot;Open an existing file\&quot;\, triggered\=self\.open\)\)\n        \# self\.saveAct \= self\.fileMenu\.addAction\(self\,QAction\(\&quot;\&amp;Save\&quot;\, self\, shortcut\=QKeySequence\.Save\,\n        \# statusTip\=\&quot;Save the document to disk\&quot;\, triggered\=self\.save\)\)\n        impMenu \= QMenu\(\'Import\'\, self\)\n        impAct \= QAction\(\'Import from file\'\, self\)\n        manAct \= QAction\(\'Add data points manually\'\, self\)\n        impMenu\.addAction\(impAct\)\n        \#impAct\.triggered\.connect\(lambda\: readOdt\(self\.tabR\, self\.tabC\, self\.table\)\)\n        impAct\.triggered\.connect\(lambda\: self\.fillTable\(\)\)\n        impMenu\.addAction\(manAct\)\n        self\.fileMenu\.addMenu\(impMenu\)\n        \#self\.saveAction \= self\.fileMenu\.addAction\(\&quot;\&amp;Save\&quot;\)\n        saveMenu \= QMenu\(\'Save As\.\.\.\'\,self\)\n        pdfAct \= QAction\(\'\.odt file\'\, self\)\n        csvAct \= QAction\(\'\.csv file\'\, self\)\n        saveMenu\.addAction\(pdfAct\)\n        saveMenu\.addAction\(csvAct\)\n        self\.fileMenu\.addMenu\(saveMenu\)\n        self\.exitAction \= self\.fileMenu\.addAction\(\&quot;E\&amp;xit\&quot;\)\n\n        self\.menuBar\.addMenu\(self\.fileMenu\)\n\n        self\.exitAction\.triggered\.connect\(self\.accept\)\n\n    def createGridGroupBox\(self\)\:\n        self\.resultFrame \= QGroupBox\(\&quot;Data \&quot;\)\n        self\.frameLayout \= QGridLayout\(\)\n        \# resultLabel \= QLabel\(\n        \#     \&quot;Vrt\\tLng\\tLat\\tRtn\\tDate\\tTime\\tVrt \(Moving Average\)\\tLng \(Moving Average\)\\tLat \(Moving Average\)\\tRtn \(Moving Average\)\&quot;\)\n        \# frameLayout\.addWidget\(resultLabel\)\n        self\.resultFrame\.setLayout\(self\.frameLayout\)\n\n    def createPlotFrame\(self\)\:\n        self\.plotFrame \= QGroupBox\(\&quot; \&quot;\)\n        self\.plotLayout \= QGridLayout\(\)\n        self\.m \= PlotCanvas\(self\, width\=5\, height\=4\)\n        self\.plotLayout\.addWidget\(self\.m\)\n        self\.plotFrame\.setLayout\(self\.plotLayout\)\n        \n    def fillTable\(self\)\:\n        stuff \= readOdt\(\)\n        self\.tabR \= stuff\[0\]\n        self\.tabC \= stuff\[1\]\n        self\.table \= stuff\[2\]\n        QWidget\(\)\.setLayout\(self\.frameLayout\)\n        self\.frameLayout \= QGridLayout\(self\)\n        for row in range\(0\, self\.tabR\)\:\n            for col in range\(0\, self\.tabC\)\:\n                self\.frameLayout\.addWidget\(QLabel\(str\(self\.table\[row\]\[col\]\)\)\, row\, col\)\n                \#print\(self\.table\[row\]\[col\]\)\n\n\n        self\.resultFrame\.setLayout\(self\.frameLayout\)\n        self\.m\.plot\(\)\n        \#self\.gridGroupBox\.layout\(\)\.addWidget\(self\.resultFrame\)</find>
+      <find>read</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -84,16 +147,23 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
+        <option value="$PROJECT_DIR$/MultiplePatients.py" />
         <option value="$PROJECT_DIR$/main.py" />
+        <option value="$PROJECT_DIR$/Preferences.py" />
         <option value="$PROJECT_DIR$/ReadOdt.py" />
+        <option value="$PROJECT_DIR$/SinglePatient.py" />
         <option value="$PROJECT_DIR$/PlotCanvas.py" />
+        <option value="$PROJECT_DIR$/help_window.py" />
         <option value="$PROJECT_DIR$/ui.py" />
+        <option value="$PROJECT_DIR$/HelpWindow.py" />
+        <option value="$PROJECT_DIR$/PolishWidget.py" />
+        <option value="$PROJECT_DIR$/EnglishWidget.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="131" />
-    <option name="y" value="240" />
+    <option name="x" value="199" />
+    <option name="y" value="-27" />
     <option name="width" value="1525" />
     <option name="height" value="700" />
   </component>
@@ -132,8 +202,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -145,6 +213,8 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -164,7 +234,7 @@
     </option>
   </component>
   <component name="RunManager" selected="Python.main">
-    <configuration name="ReadOdt" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="HelpWindow" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
@@ -176,10 +246,47 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="program" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/ReadOdt.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/HelpWindow.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
+    <configuration name="Preferences" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="program" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Preferences.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
+    <configuration name="SinglePatient" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="program" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/SinglePatient.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
     </configuration>
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -197,6 +304,7 @@
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
     </configuration>
     <configuration name="ui" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -214,22 +322,30 @@
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
     </configuration>
-    <list size="3">
+    <list size="5">
       <item index="0" class="java.lang.String" itemvalue="Python.ui" />
       <item index="1" class="java.lang.String" itemvalue="Python.main" />
-      <item index="2" class="java.lang.String" itemvalue="Python.ReadOdt" />
+      <item index="2" class="java.lang.String" itemvalue="Python.Preferences" />
+      <item index="3" class="java.lang.String" itemvalue="Python.SinglePatient" />
+      <item index="4" class="java.lang.String" itemvalue="Python.HelpWindow" />
     </list>
     <recent_temporary>
-      <list size="3">
+      <list size="5">
         <item index="0" class="java.lang.String" itemvalue="Python.main" />
-        <item index="1" class="java.lang.String" itemvalue="Python.ui" />
-        <item index="2" class="java.lang.String" itemvalue="Python.ReadOdt" />
+        <item index="1" class="java.lang.String" itemvalue="Python.HelpWindow" />
+        <item index="2" class="java.lang.String" itemvalue="Python.SinglePatient" />
+        <item index="3" class="java.lang.String" itemvalue="Python.Preferences" />
+        <item index="4" class="java.lang.String" itemvalue="Python.ui" />
       </list>
     </recent_temporary>
   </component>
   <component name="ShelveChangesManager" show_recycled="false">
     <option name="remove_strategy" value="false" />
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -260,30 +376,135 @@
       <option name="project" value="LOCAL" />
       <updated>1511734446349</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Checkboxes work">
+      <created>1512338973231</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1512338973231</updated>
+    </task>
+    <task id="LOCAL-00005" summary="adding corrections and multiple patients handling">
+      <created>1515948570548</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1515948570549</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Reading means and stds for multiple patients">
+      <created>1515958844716</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1515958844716</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Adding a scrollarea to the multiple patients dialog and catching the error when a table data element is not a float">
+      <created>1516637824729</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1516637824729</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Preferences window added&#10;plot for multiple patients added. needs fixes">
+      <created>1516712550308</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1516712550308</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Swapping multiple patients and single patient">
+      <created>1518366862730</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1518366862730</updated>
+    </task>
+    <task id="LOCAL-00010" summary="single patients window is no longer a dialog">
+      <created>1518781971148</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1518781971148</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Errorbars are a thing now">
+      <created>1518795761036</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1518795761036</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Single Patient means and standard deviations added&#10;Saving file as .csv added">
+      <created>1518966280474</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1518966280474</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Plots now have adjustable labels">
+      <created>1519235783259</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1519235783259</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Added missing preferences options and refreshing of the data after changing the preferences">
+      <created>1519493319861</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1519493319861</updated>
+    </task>
+    <task id="LOCAL-00015" summary="A few fixes">
+      <created>1519996239056</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1519996239056</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Added saving the plot">
+      <created>1519999665675</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1519999665675</updated>
+    </task>
+    <task id="LOCAL-00017" summary="Keyboard shortcuts and a few safety checks added">
+      <created>1520617983264</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1520617983264</updated>
+    </task>
+    <task id="LOCAL-00018" summary="Help window with the english instruction added">
+      <created>1520701168577</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1520701168577</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1096" extended-state="6" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16145833" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19322917" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32905483" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.19328585" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.19328585" sideWeight="0.50625" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19328585" sideWeight="0.49375" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39979655" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32960325" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -313,7 +534,22 @@
     <MESSAGE value="Data read from the documents printed in the window" />
     <MESSAGE value="Plot added" />
     <MESSAGE value="checkboxes" />
-    <option name="LAST_COMMIT_MESSAGE" value="checkboxes" />
+    <MESSAGE value="Checkboxes work" />
+    <MESSAGE value="adding corrections and multiple patients handling" />
+    <MESSAGE value="Reading means and stds for multiple patients" />
+    <MESSAGE value="Adding a scrollarea to the multiple patients dialog and catching the error when a table data element is not a float" />
+    <MESSAGE value="Preferences window added&#10;plot for multiple patients added. needs fixes" />
+    <MESSAGE value="Swapping multiple patients and single patient" />
+    <MESSAGE value="single patients window is no longer a dialog" />
+    <MESSAGE value="Errorbars are a thing now" />
+    <MESSAGE value="Single Patient means and standard deviations added&#10;Saving file as .csv added" />
+    <MESSAGE value="Plots now have adjustable labels" />
+    <MESSAGE value="Added missing preferences options and refreshing of the data after changing the preferences" />
+    <MESSAGE value="A few fixes" />
+    <MESSAGE value="Added saving the plot" />
+    <MESSAGE value="Keyboard shortcuts and a few safety checks added" />
+    <MESSAGE value="Help window with the english instruction added" />
+    <option name="LAST_COMMIT_MESSAGE" value="Help window with the english instruction added" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -324,81 +560,11 @@
           </properties>
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="3" />
+      <option name="time" value="5" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/ui.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1377">
-          <caret line="84" column="21" lean-forward="false" selection-start-line="84" selection-start-column="21" selection-end-line="84" selection-end-column="21" />
-          <folding>
-            <element signature="e#0#229#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ReadOdt.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="15" column="78" lean-forward="false" selection-start-line="15" selection-start-column="78" selection-end-line="15" selection-end-column="78" />
-          <folding>
-            <element signature="e#0#33#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/PlotCanvas.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="18" column="41" lean-forward="false" selection-start-line="18" selection-start-column="41" selection-end-line="18" selection-end-column="41" />
-          <folding>
-            <element signature="e#0#13#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="7" column="0" lean-forward="false" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ui.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1377">
-          <caret line="84" column="21" lean-forward="false" selection-start-line="84" selection-start-column="21" selection-end-line="84" selection-end-column="21" />
-          <folding>
-            <element signature="e#0#229#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ReadOdt.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="15" column="78" lean-forward="false" selection-start-line="15" selection-start-column="78" selection-end-line="15" selection-end-column="78" />
-          <folding>
-            <element signature="e#0#33#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/PlotCanvas.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="18" column="41" lean-forward="true" selection-start-line="18" selection-start-column="41" selection-end-line="18" selection-end-column="41" />
-          <folding>
-            <element signature="e#0#13#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
@@ -414,7 +580,7 @@
         <state relative-caret-position="1377">
           <caret line="84" column="21" lean-forward="false" selection-start-line="84" selection-start-column="21" selection-end-line="84" selection-end-column="21" />
           <folding>
-            <element signature="e#0#229#0" expanded="true" />
+            <element signature="e#0#10#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -454,7 +620,7 @@
         <state relative-caret-position="17">
           <caret line="1" column="63" lean-forward="false" selection-start-line="1" selection-start-column="63" selection-end-line="1" selection-end-column="63" />
           <folding>
-            <element signature="e#0#229#0" expanded="true" />
+            <element signature="e#0#10#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -484,7 +650,7 @@
         <state relative-caret-position="17">
           <caret line="1" column="63" lean-forward="false" selection-start-line="1" selection-start-column="63" selection-end-line="1" selection-end-column="63" />
           <folding>
-            <element signature="e#0#229#0" expanded="true" />
+            <element signature="e#0#10#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -514,7 +680,7 @@
         <state relative-caret-position="1122">
           <caret line="68" column="54" lean-forward="true" selection-start-line="68" selection-start-column="54" selection-end-line="68" selection-end-column="54" />
           <folding>
-            <element signature="e#0#229#0" expanded="true" />
+            <element signature="e#0#10#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -544,7 +710,7 @@
         <state relative-caret-position="221">
           <caret line="13" column="81" lean-forward="false" selection-start-line="13" selection-start-column="81" selection-end-line="13" selection-end-column="81" />
           <folding>
-            <element signature="e#0#229#0" expanded="true" />
+            <element signature="e#0#10#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -574,7 +740,7 @@
         <state relative-caret-position="221">
           <caret line="13" column="81" lean-forward="false" selection-start-line="13" selection-start-column="81" selection-end-line="13" selection-end-column="81" />
           <folding>
-            <element signature="e#0#229#0" expanded="true" />
+            <element signature="e#0#10#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -604,7 +770,7 @@
         <state relative-caret-position="0">
           <caret line="0" column="9" lean-forward="false" selection-start-line="0" selection-start-column="9" selection-end-line="0" selection-end-column="9" />
           <folding>
-            <element signature="e#0#229#0" expanded="true" />
+            <element signature="e#0#10#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -644,7 +810,7 @@
         <state relative-caret-position="0">
           <caret line="0" column="9" lean-forward="false" selection-start-line="0" selection-start-column="9" selection-end-line="0" selection-end-column="9" />
           <folding>
-            <element signature="e#0#229#0" expanded="true" />
+            <element signature="e#0#10#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -674,7 +840,7 @@
         <state relative-caret-position="0">
           <caret line="0" column="9" lean-forward="false" selection-start-line="0" selection-start-column="9" selection-end-line="0" selection-end-column="9" />
           <folding>
-            <element signature="e#0#229#0" expanded="true" />
+            <element signature="e#0#10#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -684,7 +850,7 @@
         <state relative-caret-position="0">
           <caret line="0" column="9" lean-forward="false" selection-start-line="0" selection-start-column="9" selection-end-line="0" selection-end-column="9" />
           <folding>
-            <element signature="e#0#229#0" expanded="true" />
+            <element signature="e#0#10#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -714,7 +880,7 @@
         <state relative-caret-position="1326">
           <caret line="78" column="1" lean-forward="false" selection-start-line="78" selection-start-column="1" selection-end-line="78" selection-end-column="1" />
           <folding>
-            <element signature="e#0#229#0" expanded="true" />
+            <element signature="e#0#10#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -734,7 +900,7 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#229#0" expanded="true" />
+            <element signature="e#0#10#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -754,7 +920,7 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#229#0" expanded="true" />
+            <element signature="e#0#10#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -790,10 +956,38 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Temp/title=u'Save MARLOWE input file',.URL" />
+    <entry file="file://$PROJECT_DIR$/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="7" column="22" lean-forward="false" selection-start-line="7" selection-start-column="22" selection-end-line="7" selection-end-column="22" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Preferences.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1972">
+          <caret line="124" column="0" lean-forward="false" selection-start-line="124" selection-start-column="0" selection-end-line="124" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#55#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/ReadOdt.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="15" column="78" lean-forward="false" selection-start-line="15" selection-start-column="78" selection-end-line="15" selection-end-column="78" />
+        <state relative-caret-position="1054">
+          <caret line="68" column="4" lean-forward="false" selection-start-line="68" selection-start-column="4" selection-end-line="68" selection-end-column="4" />
           <folding>
             <element signature="e#0#33#0" expanded="true" />
           </folding>
@@ -802,30 +996,60 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/PlotCanvas.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="612">
-          <caret line="40" column="61" lean-forward="false" selection-start-line="40" selection-start-column="61" selection-end-line="40" selection-end-column="61" />
+        <state relative-caret-position="748">
+          <caret line="52" column="56" lean-forward="false" selection-start-line="52" selection-start-column="56" selection-end-line="52" selection-end-column="56" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ui.py">
+    <entry file="file://$PROJECT_DIR$/SinglePatient.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="969">
-          <caret line="62" column="54" lean-forward="false" selection-start-line="62" selection-start-column="54" selection-end-line="62" selection-end-column="54" />
+        <state relative-caret-position="3230">
+          <caret line="202" column="29" lean-forward="false" selection-start-line="199" selection-start-column="8" selection-end-line="202" selection-end-column="29" />
           <folding>
-            <element signature="e#0#229#0" expanded="true" />
+            <element signature="e#0#10#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/main.py">
+    <entry file="file://$PROJECT_DIR$/ui.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="0" lean-forward="false" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+        <state relative-caret-position="439">
+          <caret line="101" column="44" lean-forward="false" selection-start-line="101" selection-start-column="44" selection-end-line="101" selection-end-column="44" />
           <folding>
-            <element signature="e#0#9#0" expanded="true" />
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/HelpWindow.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="286">
+          <caret line="25" column="48" lean-forward="true" selection-start-line="25" selection-start-column="48" selection-end-line="25" selection-end-column="48" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/PolishWidget.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="609">
+          <caret line="119" column="8" lean-forward="true" selection-start-line="119" selection-start-column="8" selection-end-line="119" selection-end-column="47" />
+          <folding>
+            <element signature="e#0#35#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/EnglishWidget.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="626">
+          <caret line="118" column="34" lean-forward="false" selection-start-line="118" selection-start-column="34" selection-end-line="118" selection-end-column="34" />
+          <folding>
+            <element signature="e#0#35#0" expanded="true" />
           </folding>
         </state>
       </provider>

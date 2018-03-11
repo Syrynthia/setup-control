@@ -6,6 +6,7 @@ from PyQt5.QtWidgets import (QWidget, QDialog, QDialogButtonBox, QGridLayout, QG
                              QVBoxLayout, QAction, QApplication, QCheckBox, QHBoxLayout, QScrollArea, QMainWindow,
                              QShortcut)
 import ReadOdt
+from HelpWindow import HelpWindow
 from PlotCanvas import PlotCanvas
 from PyQt5.QtCore import Qt
 from Preferences import PreferencesDialog
@@ -96,7 +97,10 @@ class UiDialog(QDialog):
         saveMenu.addAction(csvAct)
         saveMenu.addAction(pdfAct)
         self.fileMenu.addMenu(saveMenu)
-        self.fileMenu.addAction(QAction('Help', self, shortcut=QKeySequence("Ctrl+H")))
+
+        help_act = QAction('Help', self, shortcut=QKeySequence("Ctrl+H"))
+        help_act.triggered.connect(self.help)
+        self.fileMenu.addAction(help_act)
         self.exitAction = self.fileMenu.addAction("E&xit")
 
         self.menuBar.addMenu(self.fileMenu)
@@ -347,3 +351,7 @@ class UiDialog(QDialog):
         ext = [".png", ".pdf", ".svg", ".ps", ".eps"]
         if file and file.name.endswith(tuple(ext)):
             self.m.save(file.name)
+
+    def help(self):
+        self.widget = HelpWindow()
+        self.widget.show()
