@@ -1,21 +1,19 @@
-import sys
+import csv
+import os
+from os.path import isfile, join
+from tkinter import Tk
+from tkinter import filedialog
 
+from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QKeySequence
-from PyQt5.QtWidgets import (QWidget, QDialog, QDialogButtonBox, QGridLayout, QGroupBox, QLabel, QMenu, QMenuBar,
-                             QTextEdit,
-                             QVBoxLayout, QAction, QApplication, QCheckBox, QHBoxLayout, QScrollArea, QMainWindow,
-                             QShortcut)
+from PyQt5.QtWidgets import (QWidget, QDialog, QGridLayout, QGroupBox, QLabel, QMenu, QMenuBar,
+                             QVBoxLayout, QAction, QCheckBox, QHBoxLayout, QScrollArea)
+
 import ReadOdt
 from HelpWindow import HelpWindow
 from PlotCanvas import PlotCanvas
-from PyQt5.QtCore import Qt
 from Preferences import PreferencesDialog
-from tkinter import filedialog
-from tkinter import Tk
 from SinglePatient import SinglePatientWindow
-import os
-from os.path import isfile, join
-import csv
 
 
 class UiDialog(QDialog):
@@ -52,10 +50,7 @@ class UiDialog(QDialog):
         mainLayout = QVBoxLayout()
         mainLayout.setMenuBar(self.menuBar)
         mainLayout.addWidget(self.resultFrame)
-        # mainLayout.addWidget(bigEditor)
-        # mainLayout.addWidget(buttonBox)
 
-        # mainLayout.addWidget(self.m)
         mainLayout.addWidget(self.plotFrame)
 
         self.setLayout(mainLayout)
@@ -66,10 +61,7 @@ class UiDialog(QDialog):
         self.menuBar = QMenuBar()
 
         self.fileMenu = QMenu("&File", self)
-        # self.openAct = self.fileMenu.addAction(self,QAction("&Open...", self, shortcut=QKeySequence.Open,
-        # statusTip="Open an existing file", triggered=self.open))
-        # self.saveAct = self.fileMenu.addAction(self,QAction("&Save", self, shortcut=QKeySequence.Save,
-        # statusTip="Save the document to disk", triggered=self.save))
+
         impMenu = QMenu('Import', self)
 
         multiPat = QMenu('Multiple Patients', self)
@@ -116,13 +108,7 @@ class UiDialog(QDialog):
 
     def createGridGroupBox(self):
         self.resultFrame = QGroupBox("Data ")
-        # self.frame_grid = QGridLayout()
-        # self.data_print = QWidget()
         self.main_frame = QHBoxLayout()
-        # self.data_print.setLayout(self.frame_grid)
-        # resultLabel = QLabel(
-        #     "Vrt\tLng\tLat\tRtn\tDate\tTime\tVrt (Moving Average)\tLng (Moving Average)\tLat (Moving Average)\tRtn (Moving Average)")
-        # frameLayout.addWidget(resultLabel)
         self.resultFrame.setLayout(self.main_frame)
 
     def createPlotFrame(self):
@@ -155,10 +141,6 @@ class UiDialog(QDialog):
         self.plotFrame.setLayout(self.plotLayout)
 
     def fillTable(self):
-        # self.data_print = QWidget()
-        # self.data_print.setMinimumWidth(400)
-        # self.data_print.setFixedHeight(300)
-        # QWidget().setLayout(self.frame_grid)
         data_print = QWidget()
         frame_grid = QGridLayout()
         QWidget().setLayout(self.main_frame)
@@ -320,18 +302,14 @@ class UiDialog(QDialog):
         file = filedialog.asksaveasfile(parent=root, filetypes=(("CSV files", "*.csv"), ("All files", "*")),
                                         title='Save file...',
                                         defaultextension='.csv')
-        # print(file.name)
 
         if file and file.name.endswith('.csv'):
             with open(file.name, 'w') as csvfile:
-                # print('csv open')
                 csvwriter = csv.writer(csvfile, delimiter=' ')  # ,
-                # quotechar='|', quoting=csv.QUOTE_MINIMAL)
-                # print('writer created')
+
                 csvwriter.writerow(
                     ['Filenames', 'Mean vrt', 'Mean lng', 'Mean lat', 'Mean rtn', 'Std vrt', 'Std lng', 'Std lat',
                      'Std rtn'])
-                # print("written titles")
 
                 for row in range(0, len(self.mean_table)):
                     tmp = [self.filenames[row]]

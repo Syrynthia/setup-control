@@ -97,6 +97,8 @@ class PreferencesDialog(QDialog):
 
     def apply(self):
         thresh = self.textbox.text()
+        if "," in thresh:
+            thresh = thresh.replace(",", ".")
         try:
             val = float(thresh)
             self.threshold = val
@@ -125,6 +127,8 @@ class PreferencesDialog(QDialog):
 
     def ok(self):
         thresh = self.textbox.text()
+        if "," in thresh:
+            thresh = thresh.replace(",", ".")
         try:
             val = float(thresh)
             self.threshold = val

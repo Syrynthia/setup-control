@@ -1,16 +1,11 @@
-import sys
-from tkinter import Tk, filedialog
-
-from PyQt5.QtGui import QWindow
-from PyQt5.QtWidgets import (QWidget, QDialog, QDialogButtonBox, QGridLayout, QGroupBox, QLabel, QMenu, QMenuBar,
-                             QTextEdit, QHBoxLayout, QScrollBar,
-                             QVBoxLayout, QAction, QApplication, QCheckBox, QScrollArea, QMainWindow)
-import ReadOdt
 import os
 
-import ui
-from PlotCanvas import PlotCanvas
 from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import (QWidget, QGridLayout, QGroupBox, QLabel, QHBoxLayout, QVBoxLayout, QCheckBox, QScrollArea,
+                             QMainWindow)
+
+import ReadOdt
+from PlotCanvas import PlotCanvas
 
 
 class SinglePatientWindow(QMainWindow):
@@ -190,15 +185,3 @@ class FormWidget(QWidget):
             self.toplot[3] = []
             self.m.plotChecked(self.toplot, self.dates)
 
-'''
-if __name__ == '__main__':
-    root = Tk()
-    root.withdraw()
-    file = filedialog.askopenfilename(parent=root, filetypes=(("ODT files", "*.odt"), ("All files", "*")))
-
-    if file:
-        app = ui.QApplication(sys.argv)
-        dialog = SinglePatientWindow(file, 0.3, 3, 0)
-        dialog.show()
-        sys.exit(app.exec_())
-'''
