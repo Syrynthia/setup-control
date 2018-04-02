@@ -108,6 +108,7 @@ class UiDialog(QDialog):
 
     def createGridGroupBox(self):
         self.resultFrame = QGroupBox("Data ")
+        self.resultFrame.setMinimumHeight(200)
         self.main_frame = QHBoxLayout()
         self.resultFrame.setLayout(self.main_frame)
 
@@ -228,7 +229,7 @@ class UiDialog(QDialog):
         self.fillTable()
 
     def choose_multi_patients(self):
-        self.filez.clear()
+        self.filez = []
         root = Tk()
         root.withdraw()
         self.filez = filedialog.askopenfilenames(parent=root, filetypes=(("ODT files", "*.odt"), ("All files", "*")))
@@ -241,11 +242,12 @@ class UiDialog(QDialog):
         root = Tk()
         root.withdraw()
         directory = filedialog.askdirectory(parent=root)
-        files = [f for f in os.listdir(directory) if isfile(join(directory, f))]
-        self.filez = [directory + "/" + f for f in files]
-        if self.filez:
-            self.files_to_table()
-            self.fillTable()
+        if directory:
+            files = [f for f in os.listdir(directory) if isfile(join(directory, f))]
+            self.filez = [directory + "/" + f for f in files]
+            if self.filez:
+                self.files_to_table()
+                self.fillTable()
 
     def files_to_table(self):
         self.table.clear()
@@ -254,8 +256,10 @@ class UiDialog(QDialog):
         self.std_table.clear()
         for file in self.filez:
             if file.endswith('.odt'):
-                self.table.append(ReadOdt.read_table(file, self.threshold, self.correction_sessions)[2])
-                self.filenames.append(os.path.split(file)[1])
+                tmp = ReadOdt.read_table(file, self.threshold, self.correction_sessions)[2]
+                if tmp:
+                    self.table.append(tmp)
+                    self.filenames.append(os.path.split(file)[1])
 
         for i in range(0, len(self.table)):
             tmp = ReadOdt.calculate_avg_stdev(self.table[i], self.mean_sessions)

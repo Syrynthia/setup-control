@@ -54,10 +54,9 @@ class FormWidget(QWidget):
     def create_data(self):
 
         self.resultFrame = QGroupBox("Data ")
-        self.resultFrame.setMaximumHeight(400)
+        self.resultFrame.setMinimumHeight(200)
         self.data_print = QWidget()
         self.data_print.setMinimumWidth(400)
-        #self.data_print.setFixedHeight(300)
         self.frameLayout = QGridLayout()
         self.main_frame = QHBoxLayout()
         self.dates.clear()
@@ -67,7 +66,6 @@ class FormWidget(QWidget):
                 self.dates.append(self.table[row][4])
             for col in range(0, len(self.table[0])):
                 self.frameLayout.addWidget(QLabel(str(self.table[row][col])), row, col)
-                #print(self.table[row][col])
 
         self.data_print.setLayout(self.frameLayout)
 

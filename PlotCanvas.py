@@ -21,11 +21,9 @@ class PlotCanvas(FigureCanvas):
 
     def plot(self):
         self.axes.cla()
-        #data = [random.random() for i in range(25)]
         data = [0, 0, 0]
         ax = self.figure.add_subplot(111)
         ax.plot(data, 'r-')
-        #ax.set_title('Plot placeholder')
         ax.set_ylabel('')
         self.draw()
 
@@ -56,7 +54,7 @@ class PlotCanvas(FigureCanvas):
         ax.plot(x, line, 'r-')
         for i in range(0, len(data)):
             if len(data[i]) > 0:
-                ax.errorbar(x, data[i], yerr=errors[i], fmt=colors[i])
+                ax.errorbar(x[:len(data[i])], data[i], yerr=errors[i], fmt=colors[i])
         ax.set_ylabel('distance from isocenter [cm]')
         ax.plot(x, line, 'r-')
         step = ceil(length/10)
