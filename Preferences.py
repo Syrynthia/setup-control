@@ -1,12 +1,6 @@
 from PyQt5.QtGui import QIntValidator, QDoubleValidator
 from PyQt5.QtWidgets import (QWidget, QDialog, QVBoxLayout, QGroupBox, QGridLayout, QLabel, QLineEdit, QPushButton,
                              QHBoxLayout)
-#from ReadOdt import THRESH
-import sys
-
-from PyQt5.uic.properties import QtCore
-
-import ui
 
 
 class PreferencesDialog(QDialog):
@@ -159,9 +153,3 @@ class PreferencesDialog(QDialog):
 
     def get_mean_sessions(self):
         return self.mean
-
-
-# if __name__ == '__main__':
-#     app = ui.QApplication(sys.argv)
-#     dialog = PreferencesDialog(0.3, 2, 0)
-#     sys.exit(dialog.exec_())

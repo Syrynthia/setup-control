@@ -1,9 +1,8 @@
-from odf.opendocument import load
-from tkinter import filedialog
-from tkinter import Tk
-from odf.table import Table, TableRow, TableCell
 from math import fabs
+
 import numpy as np
+from odf.opendocument import load
+from odf.table import Table, TableRow, TableCell
 
 # this is the row data in the table starts on
 TABLE_DATA_ROW = 3

@@ -1,12 +1,8 @@
-import random
-
-import sys
-from PyQt5.QtWidgets import QSizePolicy, QDialog, QWidget, QGridLayout, QVBoxLayout
-from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
-from matplotlib.figure import Figure
 from math import ceil
 
-import ui
+from PyQt5.QtWidgets import QSizePolicy
+from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
+from matplotlib.figure import Figure
 
 
 class PlotCanvas(FigureCanvas):
