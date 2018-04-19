@@ -10,7 +10,8 @@ class EnglishWidget(QWidget):
         text_edit = QTextEdit()
         text_edit.setReadOnly(True)
 
-        text_edit.textCursor().insertHtml('<center><h1> Setup control data analysis application manual </h1></center><br> ')
+        text_edit.textCursor().insertHtml('<center><h1> Setup control data analysis application v. 1.0 manual </h1>'
+                                          'by Alicja Przybyś, open source licence Apache-2.0</center><br> ')
         text_edit.textCursor().insertHtml('<h2>Importing data</h2> <br>')
         text_edit.textCursor().insertHtml('<p>To import data select File menu and choose Import→Multiple '
                                           'Patients→Select Multiple Files or Import→Multiple Patients→Select Folder. '

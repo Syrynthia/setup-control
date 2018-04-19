@@ -229,23 +229,23 @@ class UiDialog(QDialog):
         self.fillTable()
 
     def choose_multi_patients(self):
-        self.filez = []
         root = Tk()
         root.withdraw()
-        self.filez = filedialog.askopenfilenames(parent=root, filetypes=(("ODT files", "*.odt"), ("All files", "*")))
-        if self.filez:
+        tmpfilez = filedialog.askopenfilenames(parent=root, filetypes=(("ODT files", "*.odt"), ("All files", "*")))
+        if tmpfilez:
+            self.filez = tmpfilez
             self.files_to_table()
             self.fillTable()
 
     def choose_dir_multi_patients(self):
-        self.filez = []
         root = Tk()
         root.withdraw()
         directory = filedialog.askdirectory(parent=root)
         if directory:
             files = [f for f in os.listdir(directory) if isfile(join(directory, f))]
-            self.filez = [directory + "/" + f for f in files]
-            if self.filez:
+            tmpfilez = [directory + "/" + f for f in files]
+            if tmpfilez:
+                self.filez = tmpfilez
                 self.files_to_table()
                 self.fillTable()
 

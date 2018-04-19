@@ -12,7 +12,8 @@ class PolishWidget(QWidget):
         text_edit.setReadOnly(True)
 
         text_edit.textCursor().insertHtml('<center><h1> Instrukcja obsługi programu do analizy danych '
-                                          'z kontroli położenia pacjenta </h1></center><br> ')
+                                          'z kontroli położenia pacjenta v. 1.0 </h1>'
+                                          'Alicja Przybyś, licencja open source Apache-2.0</center><br> ')
         text_edit.textCursor().insertHtml('<h2>Wczytywanie danych</h2> <br>')
         text_edit.textCursor().insertHtml('<p>To Aby wczytać dane należy wejść w menu File i wybrać '
                                           'Import→Multiple Patients→Select Multiple Files lub '
