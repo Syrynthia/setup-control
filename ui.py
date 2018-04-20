@@ -260,9 +260,15 @@ class UiDialog(QDialog):
                 if tmp:
                     self.table.append(tmp)
                     self.filenames.append(os.path.split(file)[1])
+            if file.endswith('.docx'):
+                tmp = ReadOdt.read_docx(file, self.threshold, self.correction_sessions)[2]
+                if tmp:
+                    self.table.append(tmp)
+                    self.filenames.append(os.path.split(file)[1])
 
         for i in range(0, len(self.table)):
             tmp = ReadOdt.calculate_avg_stdev(self.table[i], self.mean_sessions)
+
             self.mean_table.append(tmp[0])
             self.std_table.append(tmp[1])
 
