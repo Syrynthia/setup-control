@@ -10,7 +10,6 @@ from PlotCanvas import PlotCanvas
 
 class SinglePatientWindow(QMainWindow):
 
-
     def __init__(self, file, threshold, correction_sessions, mean_sessions):
         QMainWindow.__init__(self)
         super(SinglePatientWindow, self).__init__()
@@ -27,13 +26,16 @@ class FormWidget(QWidget):
     lat = []
     rtn = []
     dates = []
-    def __init__(self, parent, file, threshold, correction_sessions, mean_sessions):
 
+    def __init__(self, parent, file, threshold, correction_sessions, mean_sessions):
         super(FormWidget, self).__init__(parent)
         self.threshold = threshold
         self.correction_sessions = correction_sessions
         self.mean_sessions = mean_sessions
-        self.table = ReadOdt.read_table(file, self.threshold, self.correction_sessions)[2]
+        if file.endswith('.odt'):
+            self.table = ReadOdt.read_table(file, self.threshold, self.correction_sessions)[2]
+        else:
+            self.table = ReadOdt.read_docx(file, self.threshold, self.correction_sessions)[2]
         [self.mean_table, self.std_table] = ReadOdt.calculate_avg_stdev(self.table, self.mean_sessions)
         self.tables_to_separate()
 
@@ -88,8 +90,8 @@ class FormWidget(QWidget):
 
         [mean, std] = ReadOdt.calculate_avg_stdev(self.table, self.mean_sessions)
         for i in range(1, 5):
-            self.mean_layout.addWidget(QLabel(str(mean[i-1])), 1, i)
-            self.mean_layout.addWidget(QLabel(str(std[i-1])), 2, i)
+            self.mean_layout.addWidget(QLabel(str(mean[i - 1])), 1, i)
+            self.mean_layout.addWidget(QLabel(str(std[i - 1])), 2, i)
 
         self.mean_frame.setLayout(self.mean_layout)
 
@@ -121,7 +123,6 @@ class FormWidget(QWidget):
             except ValueError:
                 pass
 
-
     def createPlotFrame(self):
         self.plotFrame = QGroupBox(" ")
         self.plotFrame.setStyleSheet("border:0;")
@@ -137,7 +138,7 @@ class FormWidget(QWidget):
         self.cbVrt.stateChanged.connect(self.drawVrt)
         cbLng = QCheckBox('Longitudinal', self)
         cbLng.stateChanged.connect(self.drawLng)
-        cbLat = QCheckBox('Latitudinal', self)
+        cbLat = QCheckBox('Lateral', self)
         cbLat.stateChanged.connect(self.drawLat)
         cbRtn = QCheckBox('Rotational', self)
         cbRtn.stateChanged.connect(self.drawRtn)
@@ -182,4 +183,3 @@ class FormWidget(QWidget):
         else:
             self.toplot[3] = []
             self.m.plotChecked(self.toplot, self.dates)
-

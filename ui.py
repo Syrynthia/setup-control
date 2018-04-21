@@ -3,6 +3,7 @@ import os
 from os.path import isfile, join
 from tkinter import Tk
 from tkinter import filedialog
+import numpy as np
 
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QKeySequence
@@ -17,8 +18,6 @@ from SinglePatient import SinglePatientWindow
 
 
 class UiDialog(QDialog):
-    # ates = ["Date", "Time", "Vrt", "Lng", "Lat", "Rtn"]
-    # table = [[0] * 1 for i in range(0, 1)]
     tabR = 0
     tabC = 0
     vrt = []
@@ -40,17 +39,20 @@ class UiDialog(QDialog):
     std_table = []
     filenames = []
     filez = []
+    population_mean = []
+    population_std = []
 
     def __init__(self):
         super(UiDialog, self).__init__()
         self.createMenu()
         self.createGridGroupBox()
         self.createPlotFrame()
+        self.create_pop_box()
 
         mainLayout = QVBoxLayout()
         mainLayout.setMenuBar(self.menuBar)
         mainLayout.addWidget(self.resultFrame)
-
+        mainLayout.addWidget(self.pop_frame)
         mainLayout.addWidget(self.plotFrame)
 
         self.setLayout(mainLayout)
@@ -112,8 +114,15 @@ class UiDialog(QDialog):
         self.main_frame = QHBoxLayout()
         self.resultFrame.setLayout(self.main_frame)
 
+    def create_pop_box(self):
+        self.pop_frame = QGroupBox("Population error")
+        self.pop_frame.setMinimumHeight(100)
+        self.pop_layout = QHBoxLayout()
+        self.pop_frame.setLayout(self.pop_layout)
+
     def createPlotFrame(self):
         self.plotFrame = QGroupBox(" ")
+        self.plotFrame.setMinimumHeight(500)
         self.plotFrame.setStyleSheet("border:0;")
         self.plotLayout = QGridLayout()
         self.m = PlotCanvas(self, width=7, height=6)
@@ -127,7 +136,7 @@ class UiDialog(QDialog):
         self.cbVrt.stateChanged.connect(self.drawVrt)
         cbLng = QCheckBox('Longitudinal', self)
         cbLng.stateChanged.connect(self.drawLng)
-        cbLat = QCheckBox('Latitudinal', self)
+        cbLat = QCheckBox('Latertal', self)
         cbLat.stateChanged.connect(self.drawLat)
         cbRtn = QCheckBox('Rotational', self)
         cbRtn.stateChanged.connect(self.drawRtn)
@@ -166,6 +175,35 @@ class UiDialog(QDialog):
 
         self.main_frame.addWidget(scroll)
         self.resultFrame.setLayout(self.main_frame)
+
+    def fill_pop(self):
+        data_print = QWidget()
+        frame_grid = QGridLayout()
+        QWidget().setLayout(self.pop_layout)
+        self.pop_layout = QHBoxLayout()
+
+        frame_grid.addWidget(QLabel(" "), 0, 0)
+        frame_grid.addWidget(QLabel("Vertical [cm]"), 0, 1)
+        frame_grid.addWidget(QLabel("Longitudinal [cm]"), 0, 2)
+        frame_grid.addWidget(QLabel("Lateral [cm]"), 0, 3)
+        frame_grid.addWidget(QLabel("Rotational [cm]"), 0, 4)
+
+        frame_grid.addWidget(QLabel("Mean"), 1, 0)
+        i = 1
+        for val in self.population_mean:
+            frame_grid.addWidget(QLabel(str(val)), 1, i)
+            i += 1
+
+        frame_grid.addWidget(QLabel("Std"), 2, 0)
+        i = 1
+        for val in self.population_std:
+            frame_grid.addWidget(QLabel(str(val)), 2, i)
+            i += 1
+
+        data_print.setLayout(frame_grid)
+
+        self.pop_layout.addWidget(data_print)
+        self.pop_frame.setLayout(self.pop_layout)
 
     def drawVrt(self, state):
         if state == Qt.Checked:
@@ -231,11 +269,14 @@ class UiDialog(QDialog):
     def choose_multi_patients(self):
         root = Tk()
         root.withdraw()
-        tmpfilez = filedialog.askopenfilenames(parent=root, filetypes=(("ODT files", "*.odt"), ("All files", "*")))
+        tmpfilez = filedialog.askopenfilenames(parent=root, filetypes=(("ODT files", "*.odt"),
+                                                                       ("DOCX files", "*.docx"),
+                                                                       ("All files", "*")))
         if tmpfilez:
             self.filez = tmpfilez
             self.files_to_table()
             self.fillTable()
+            self.fill_pop()
 
     def choose_dir_multi_patients(self):
         root = Tk()
@@ -248,6 +289,7 @@ class UiDialog(QDialog):
                 self.filez = tmpfilez
                 self.files_to_table()
                 self.fillTable()
+                self.fill_pop()
 
     def files_to_table(self):
         self.table.clear()
@@ -255,12 +297,12 @@ class UiDialog(QDialog):
         self.mean_table.clear()
         self.std_table.clear()
         for file in self.filez:
-            if file.endswith('.odt'):
+            if file.endswith('.odt') and '~' not in file:
                 tmp = ReadOdt.read_table(file, self.threshold, self.correction_sessions)[2]
                 if tmp:
                     self.table.append(tmp)
                     self.filenames.append(os.path.split(file)[1])
-            if file.endswith('.docx'):
+            elif file.endswith('.docx') and '~' not in file:
                 tmp = ReadOdt.read_docx(file, self.threshold, self.correction_sessions)[2]
                 if tmp:
                     self.table.append(tmp)
@@ -271,6 +313,9 @@ class UiDialog(QDialog):
 
             self.mean_table.append(tmp[0])
             self.std_table.append(tmp[1])
+
+        self.population_mean = np.around(np.mean(self.mean_table, axis=0), decimals=1)
+        self.population_std = np.around(np.std(self.mean_table, axis=0), decimals=2)
 
         self.tables_to_separate()
 
@@ -300,9 +345,11 @@ class UiDialog(QDialog):
     def single_pat(self):
         root = Tk()
         root.withdraw()
-        file = filedialog.askopenfilename(parent=root, filetypes=(("ODT files", "*.odt"), ("All files", "*")))
+        file = filedialog.askopenfilename(parent=root, filetypes=(("ODT files", "*.odt"),
+                                                                  ("DOCX files", "*.docx"),
+                                                                  ("All files", "*")))
 
-        if file:
+        if file and file.endswith(('.odt', '.docx')):
             self.widget = SinglePatientWindow(file, self.threshold, self.correction_sessions, self.mean_sessions)
             self.widget.show()
 
@@ -314,7 +361,7 @@ class UiDialog(QDialog):
                                         defaultextension='.csv')
 
         if file and file.name.endswith('.csv'):
-            with open(file.name, 'w') as csvfile:
+            with open(file.name, 'w', newline='') as csvfile:
                 csvwriter = csv.writer(csvfile, delimiter=' ')  # ,
 
                 csvwriter.writerow(
@@ -327,6 +374,11 @@ class UiDialog(QDialog):
                     tmp.extend(self.std_table[row][:])
 
                     csvwriter.writerow(tmp)
+                csvwriter.writerow([])
+                population = ['Population']
+                population.extend(self.population_mean)
+                population.extend(self.population_std)
+                csvwriter.writerow(population)
 
     def save_plot(self):
         root = Tk()
