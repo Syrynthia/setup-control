@@ -7,10 +7,11 @@ from docx import Document
 
 # this is the row data in the table starts on
 TABLE_DATA_ROW = 3
-#this is the number of sessions after which corrections were applied
+# this is the number of sessions after which corrections were applied
 SESSION_NUM = 3
 
 
+# function handling reading of an odt file - puts it in a list of lists, assumes there is only one table in a file
 def read_table(filez, threshold, correction_sessions):
     table = []
     doc = load(filez)
@@ -33,6 +34,7 @@ def read_table(filez, threshold, correction_sessions):
     return [row, col, table]
 
 
+# analysis of a single data list
 def calculate_avg_stdev(table, mean_number):
     values = [[], [], [], []]
 
@@ -55,17 +57,15 @@ def calculate_avg_stdev(table, mean_number):
     return [mean, stdev]
 
 
+# function handling reading of table in  a docx file - puts it in a list of lists, assumes there is only one table
+# in a file
 def read_docx(filez, threshold, correction_sessions):
     table = []
     doc = Document(filez)
     tables = doc.tables
-    row = 0 
-    col = 0 
     for tab in tables:
-        row = len(tab.rows)
         for i in range(0, len(tab.rows)):
             table.append([])
-            col = len(tab.rows[i].cells)
             for j in range(0, len(tab.rows[i].cells)):
                 for paragraph in tab.rows[i].cells[j].paragraphs:
                     string = paragraph.text
@@ -73,7 +73,7 @@ def read_docx(filez, threshold, correction_sessions):
                         string = string.replace(",", ".")
                     table[i].append(string)
 
-    return [row, col, correct(table, row, threshold, correction_sessions)]
+    return [len(table), len(table[0]), correct(table, len(table), threshold, correction_sessions)]
 
 
 def correct(table, row, threshold, correction_sessions):
@@ -84,7 +84,7 @@ def correct(table, row, threshold, correction_sessions):
                 avr = float(table[i - 1][j])
                 if fabs(avr) > threshold:
                     try:
-                        val = float(table[i - 1][j-6])
+                        val = float(table[i - 1][j - 6])
                         table[i - 1][j - 6] = str(np.around(val - avr, decimals=1))
                     except ValueError:
                         pass

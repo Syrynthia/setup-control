@@ -3,6 +3,7 @@ from PyQt5.QtWidgets import (QWidget, QDialog, QVBoxLayout, QGroupBox, QGridLayo
                              QHBoxLayout)
 
 
+# class with the preferences dialog
 class PreferencesDialog(QDialog):
 
     def __init__(self, threshold, correction, mean):
@@ -27,6 +28,7 @@ class PreferencesDialog(QDialog):
 
         self.setLayout(main_layout)
 
+    # method creating a frame for changing the threshold value - validator added to ensure it's a double value
     def change_threshold(self):
         self.frame = QGroupBox("Threshold")
         thresh_layout = QGridLayout()
@@ -42,6 +44,8 @@ class PreferencesDialog(QDialog):
 
         self.frame.setLayout(thresh_layout)
 
+    # method creating a frame for changing the  number of initial sessions before the correction is applied
+    # - validator added to ensure it's an integer value
     def change_correction_number(self):
         self.frame2 = QGroupBox("Number of sessions before the corrections were applied")
         thresh_layout = QGridLayout()
@@ -57,6 +61,8 @@ class PreferencesDialog(QDialog):
 
         self.frame2.setLayout(thresh_layout)
 
+    # method creating a frame for changing the  number of sessions taken for calculating the mean and standard
+    # deviation values - validator added to ensure it's an integer value
     def change_mean_number(self):
         self.frame3 = QGroupBox("Number of sessions used to calculate the mean averages")
         thresh_layout = QGridLayout()
@@ -75,6 +81,7 @@ class PreferencesDialog(QDialog):
 
         self.frame3.setLayout(thresh_layout)
 
+    # method adding widget with the buttons for applying the changes
     def create_buttons(self):
         self.buttons = QWidget()
         buttons_layout = QHBoxLayout()
@@ -89,6 +96,7 @@ class PreferencesDialog(QDialog):
 
         self.buttons.setLayout(buttons_layout)
 
+    # method readign the values and changing them in the dialog - without closing
     def apply(self):
         thresh = self.textbox.text()
         if "," in thresh:
@@ -119,6 +127,7 @@ class PreferencesDialog(QDialog):
         except ValueError:
             pass
 
+    # method readign the values and changing them in the dialog - with closing
     def ok(self):
         thresh = self.textbox.text()
         if "," in thresh:

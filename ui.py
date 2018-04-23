@@ -17,6 +17,7 @@ from Preferences import PreferencesDialog
 from SinglePatient import SinglePatientWindow
 
 
+# class containing the main dialog
 class UiDialog(QDialog):
     tabR = 0
     tabC = 0
@@ -39,9 +40,11 @@ class UiDialog(QDialog):
     std_table = []
     filenames = []
     filez = []
+    population_bias_mean = []
+    population_bias_std = []
     population_mean = []
-    population_std = []
 
+    # initialisation - this cretes the dialog with empty franes and plot
     def __init__(self):
         super(UiDialog, self).__init__()
         self.createMenu()
@@ -59,6 +62,7 @@ class UiDialog(QDialog):
 
         self.setWindowTitle("Setup control")
 
+    # method creating the menu bar and assiging actions and shortcuts to menu items
     def createMenu(self):
         self.menuBar = QMenuBar()
 
@@ -108,18 +112,21 @@ class UiDialog(QDialog):
 
         self.exitAction.triggered.connect(self.accept)
 
+    # method creating an empty frame to be filled with averages and standard deviations from each file
     def createGridGroupBox(self):
         self.resultFrame = QGroupBox("Data ")
         self.resultFrame.setMinimumHeight(200)
         self.main_frame = QHBoxLayout()
         self.resultFrame.setLayout(self.main_frame)
 
+    # method creating an empty frame to be filled with population error data
     def create_pop_box(self):
         self.pop_frame = QGroupBox("Population error")
         self.pop_frame.setMinimumHeight(100)
         self.pop_layout = QHBoxLayout()
         self.pop_frame.setLayout(self.pop_layout)
 
+    # method creating the frame containing an empty plot and the checkboxes
     def createPlotFrame(self):
         self.plotFrame = QGroupBox(" ")
         self.plotFrame.setMinimumHeight(500)
@@ -150,6 +157,7 @@ class UiDialog(QDialog):
         self.plotLayout.addWidget(self.checkboxes, 0, 1)
         self.plotFrame.setLayout(self.plotLayout)
 
+    # method filling the Data frame with means and standard deviations from each file
     def fillTable(self):
         data_print = QWidget()
         frame_grid = QGridLayout()
@@ -176,6 +184,7 @@ class UiDialog(QDialog):
         self.main_frame.addWidget(scroll)
         self.resultFrame.setLayout(self.main_frame)
 
+    # method filling the Population Error frame with analysed data
     def fill_pop(self):
         data_print = QWidget()
         frame_grid = QGridLayout()
@@ -188,15 +197,18 @@ class UiDialog(QDialog):
         frame_grid.addWidget(QLabel("Lateral [cm]"), 0, 3)
         frame_grid.addWidget(QLabel("Rotational [cm]"), 0, 4)
 
-        frame_grid.addWidget(QLabel("Mean"), 1, 0)
+        frame_grid.addWidget(QLabel("Systematic error"), 1, 0)
         i = 1
-        for val in self.population_mean:
-            frame_grid.addWidget(QLabel(str(val)), 1, i)
+        for val in self.population_bias_mean:
+            string = str(val)
+            if string == '-0.0':
+                string = string.replace("-", "")
+            frame_grid.addWidget(QLabel(string + u"\u00B1" + str(self.population_bias_std[i - 1])), 1, i)
             i += 1
 
-        frame_grid.addWidget(QLabel("Std"), 2, 0)
+        frame_grid.addWidget(QLabel("Random error"), 2, 0)
         i = 1
-        for val in self.population_std:
+        for val in self.population_mean:
             frame_grid.addWidget(QLabel(str(val)), 2, i)
             i += 1
 
@@ -205,6 +217,7 @@ class UiDialog(QDialog):
         self.pop_layout.addWidget(data_print)
         self.pop_frame.setLayout(self.pop_layout)
 
+    # method adding the Vrt data to the plot
     def drawVrt(self, state):
         if state == Qt.Checked:
             self.toplot[0] = self.vrt
@@ -217,6 +230,7 @@ class UiDialog(QDialog):
 
             self.m.plot_checked_errors(self.toplot, self.toplot_errors, self.filenames)
 
+    # method adding the Lng data to the plot
     def drawLng(self, state):
         if state == Qt.Checked:
             self.toplot[1] = self.lng
@@ -229,6 +243,7 @@ class UiDialog(QDialog):
 
             self.m.plot_checked_errors(self.toplot, self.toplot_errors, self.filenames)
 
+    # method adding the Lat data to the plot
     def drawLat(self, state):
         if state == Qt.Checked:
             self.toplot[2] = self.lat
@@ -241,6 +256,7 @@ class UiDialog(QDialog):
 
             self.m.plot_checked_errors(self.toplot, self.toplot_errors, self.filenames)
 
+    # method adding the Rtn data to the plot
     def drawRtn(self, state):
         if state == Qt.Checked:
             self.toplot[3] = self.rtn
@@ -253,9 +269,11 @@ class UiDialog(QDialog):
 
             self.m.plot_checked_errors(self.toplot, self.toplot_errors, self.filenames)
 
+    # method changing the threshold value
     def change_thresh(self, value):
         self.threshold = value
 
+    # method opening the preferences dialog and saving all the changes afterwards
     def preferences(self):
         widget = PreferencesDialog(self.threshold, self.correction_sessions, self.mean_sessions)
         widget.exec_()
@@ -266,6 +284,7 @@ class UiDialog(QDialog):
         self.files_to_table()
         self.fillTable()
 
+    # methond for opening a file choice dialog and filling the dialog with data afterwards
     def choose_multi_patients(self):
         root = Tk()
         root.withdraw()
@@ -278,6 +297,7 @@ class UiDialog(QDialog):
             self.fillTable()
             self.fill_pop()
 
+    # methond for opening a directory choice dialog and filling the dialog with data afterwards
     def choose_dir_multi_patients(self):
         root = Tk()
         root.withdraw()
@@ -291,6 +311,7 @@ class UiDialog(QDialog):
                 self.fillTable()
                 self.fill_pop()
 
+    # method that reads each file, calculates the data and puts it in lists
     def files_to_table(self):
         self.table.clear()
         self.filenames.clear()
@@ -314,11 +335,13 @@ class UiDialog(QDialog):
             self.mean_table.append(tmp[0])
             self.std_table.append(tmp[1])
 
-        self.population_mean = np.around(np.mean(self.mean_table, axis=0), decimals=1)
-        self.population_std = np.around(np.std(self.mean_table, axis=0), decimals=2)
+        self.population_bias_mean = np.around(np.mean(self.mean_table, axis=0), decimals=1)
+        self.population_bias_std = np.around(np.std(self.mean_table, axis=0), decimals=2)
+        self.population_mean = np.around(np.mean(self.std_table, axis=0), decimals=2)
 
         self.tables_to_separate()
 
+    # method that separates the main list into the ones according to the vector value - for plotting
     def tables_to_separate(self):
         self.vrt.clear()
         self.lng.clear()
@@ -342,6 +365,7 @@ class UiDialog(QDialog):
             self.lat_error.append(row[2])
             self.rtn_error.append(row[3])
 
+    # method opening the single patient window - with single file selection first
     def single_pat(self):
         root = Tk()
         root.withdraw()
@@ -353,6 +377,7 @@ class UiDialog(QDialog):
             self.widget = SinglePatientWindow(file, self.threshold, self.correction_sessions, self.mean_sessions)
             self.widget.show()
 
+    # method for saving the data to a csv file
     def save_csv(self):
         root = Tk()
         root.withdraw()
@@ -375,11 +400,15 @@ class UiDialog(QDialog):
 
                     csvwriter.writerow(tmp)
                 csvwriter.writerow([])
-                population = ['Population']
-                population.extend(self.population_mean)
-                population.extend(self.population_std)
+                population = ['Systematic error']
+                population.extend(self.population_bias_mean)
+                population.extend(self.population_bias_std)
                 csvwriter.writerow(population)
+                rand = ['Random error']
+                rand.extend(self.population_mean)
+                csvwriter.writerow(rand)
 
+    # method for saving the plot as is
     def save_plot(self):
         root = Tk()
         root.withdraw()
@@ -392,6 +421,7 @@ class UiDialog(QDialog):
         if file and file.name.endswith(tuple(ext)):
             self.m.save(file.name)
 
+    # method opening the help window
     def help(self):
         self.widget = HelpWindow()
         self.widget.show()

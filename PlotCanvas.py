@@ -5,6 +5,7 @@ from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
 
 
+# class creating a plot object
 class PlotCanvas(FigureCanvas):
     def __init__(self, parent=None, width=5, height=4, dpi=100):
         self.fig = Figure(figsize=(width, height), dpi=dpi)
@@ -19,6 +20,7 @@ class PlotCanvas(FigureCanvas):
         FigureCanvas.updateGeometry(self)
         self.plot()
 
+    # method for drawing the empty plot
     def plot(self):
         self.axes.cla()
         data = [0, 0, 0]
@@ -27,6 +29,7 @@ class PlotCanvas(FigureCanvas):
         ax.set_ylabel('')
         self.draw()
 
+    # method for drawing the single patient plot
     def plotChecked(self, data, labels):
         self.axes.cla()
         colors = ['bo', 'go', 'co', 'mo']
@@ -44,6 +47,7 @@ class PlotCanvas(FigureCanvas):
         ax.set_xticklabels(labels[::step], rotation=15)
         self.draw()
 
+    # method for drawing the main plot with errorbars
     def plot_checked_errors(self, data, errors, labels):
         self.axes.cla()
         colors = ['bo', 'go', 'co', 'mo']
@@ -57,11 +61,10 @@ class PlotCanvas(FigureCanvas):
                 ax.errorbar(x[:len(data[i])], data[i], yerr=errors[i], fmt=colors[i])
         ax.set_ylabel('distance from isocenter [cm]')
         ax.plot(x, line, 'r-')
-        step = ceil(length/10)
+        step = ceil(length / 10)
         ax.set_xticks(x[::step])
         ax.set_xticklabels(labels[::step], rotation=15)
         self.draw()
-        
+
     def save(self, file):
         self.fig.savefig(file)
-

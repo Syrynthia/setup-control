@@ -1,8 +1,8 @@
 from PyQt5.QtGui import QTextCursor
 from PyQt5.QtWidgets import QWidget, QTextEdit, QVBoxLayout
-from PyQt5.uic.properties import QtGui
 
 
+# the widget with the instruction in polish - written in html, because of the sheer volume put in a separate file
 class PolishWidget(QWidget):
     def __init__(self, parent, img1, img2, img3):
         super(PolishWidget, self).__init__(parent)
@@ -118,6 +118,8 @@ class PolishWidget(QWidget):
                                           '<td><br>			Otwórz okno preferencji		</td>'
                                           '</tr>'
                                           '</table>')
+        # cursor is put back at the top of the text area, because otherwise the instruction initially shows scrolled
+        # to the bottom
         text_edit.moveCursor(QTextCursor.Start)
         tab_layout.addWidget(text_edit)
         self.setLayout(tab_layout)

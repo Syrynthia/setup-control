@@ -7,7 +7,7 @@ from PyQt5.QtWidgets import (QWidget, QGridLayout, QGroupBox, QLabel, QHBoxLayou
 import ReadOdt
 from PlotCanvas import PlotCanvas
 
-
+#main class producing hte window itself
 class SinglePatientWindow(QMainWindow):
 
     def __init__(self, file, threshold, correction_sessions, mean_sessions):
@@ -18,7 +18,7 @@ class SinglePatientWindow(QMainWindow):
         self.filename = os.path.split(file)[1]
         self.setWindowTitle(self.filename)
 
-
+#central widget of the window
 class FormWidget(QWidget):
     toplot = [[], [], [], []]
     vrt = []
@@ -52,7 +52,7 @@ class FormWidget(QWidget):
         mainLayout.addWidget(self.plotFrame)
 
         self.setLayout(mainLayout)
-
+# creates the frame and fills it out with the data from the file
     def create_data(self):
 
         self.resultFrame = QGroupBox("Data ")
@@ -77,6 +77,7 @@ class FormWidget(QWidget):
         self.main_frame.addWidget(scroll)
         self.resultFrame.setLayout(self.main_frame)
 
+#adds the frame with the means and standard deviations
     def add_means(self):
         self.mean_frame = QGroupBox(" ")
         self.mean_layout = QGridLayout()
@@ -95,6 +96,7 @@ class FormWidget(QWidget):
 
         self.mean_frame.setLayout(self.mean_layout)
 
+#separates the data for plotting
     def tables_to_separate(self):
         self.vrt.clear()
         self.lng.clear()
@@ -123,6 +125,7 @@ class FormWidget(QWidget):
             except ValueError:
                 pass
 
+#creates the frame with the plot and checkboxes
     def createPlotFrame(self):
         self.plotFrame = QGroupBox(" ")
         self.plotFrame.setStyleSheet("border:0;")
@@ -152,6 +155,7 @@ class FormWidget(QWidget):
         self.plotLayout.addWidget(self.checkboxes, 0, 1)
         self.plotFrame.setLayout(self.plotLayout)
 
+    # method adding the Vrt data to the plot
     def drawVrt(self, state):
         if state == Qt.Checked:
             self.toplot[0] = self.vrt
@@ -160,6 +164,7 @@ class FormWidget(QWidget):
             self.toplot[0] = []
             self.m.plotChecked(self.toplot, self.dates)
 
+    # method adding the Lng data to the plot
     def drawLng(self, state):
         if state == Qt.Checked:
             self.toplot[1] = self.lng
@@ -168,6 +173,7 @@ class FormWidget(QWidget):
             self.toplot[1] = []
             self.m.plotChecked(self.toplot, self.dates)
 
+    # method adding the Lat data to the plot
     def drawLat(self, state):
         if state == Qt.Checked:
             self.toplot[2] = self.lat
@@ -176,6 +182,7 @@ class FormWidget(QWidget):
             self.toplot[2] = []
             self.m.plotChecked(self.toplot, self.dates)
 
+    # method adding the Rtn data to the plot
     def drawRtn(self, state):
         if state == Qt.Checked:
             self.toplot[3] = self.rtn

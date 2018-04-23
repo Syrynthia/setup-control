@@ -1,7 +1,7 @@
 from PyQt5.QtGui import QTextCursor
 from PyQt5.QtWidgets import QWidget, QTextEdit, QVBoxLayout
 
-
+# the widget with the instruction in english - written in html, because of the sheer volume put in a separate file
 class EnglishWidget(QWidget):
     def __init__(self, parent, img1, img2, img3):
         super(EnglishWidget, self).__init__(parent)
@@ -116,7 +116,8 @@ class EnglishWidget(QWidget):
                                           '<td><br>			Open the Preferences dialog		</td>'
                                           '</tr>'
                                           '</table>')
-
+        # cursor is put back at the top of the text area, because otherwise the instruction initially shows
+        # scrolled to the bottom
         text_edit.moveCursor(QTextCursor.Start)
         tab_layout.addWidget(text_edit)
         self.setLayout(tab_layout)

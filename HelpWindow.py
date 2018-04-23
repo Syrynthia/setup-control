@@ -1,13 +1,11 @@
-import sys
-
 from PyQt5.QtGui import QImage
-from PyQt5.QtWidgets import QMainWindow, QWidget, QVBoxLayout, QTabWidget, QTextEdit
+from PyQt5.QtWidgets import QMainWindow, QWidget, QVBoxLayout, QTabWidget
 
-import ui
 from EnglishWidget import EnglishWidget
 from PolishWidget import PolishWidget
 
 
+# class handling the help window containing instructions in polish and english
 class HelpWindow(QMainWindow):
 
     def __init__(self):
@@ -20,6 +18,7 @@ class HelpWindow(QMainWindow):
         self.setMinimumHeight(600)
 
 
+# class with the widget that will be set as central in the help window
 class HelpWidget(QWidget):
 
     def __init__(self, parent):
@@ -36,6 +35,7 @@ class HelpWidget(QWidget):
 
         self.setLayout(self.layout)
 
+    # method creating the tabs with instructions in certain language
     def create_tabs(self):
         self.tabs = QTabWidget()
 
