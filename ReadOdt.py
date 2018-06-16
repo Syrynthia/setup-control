@@ -15,19 +15,26 @@ SESSION_NUM = 3
 def read_table(filez, threshold, correction_sessions):
     table = []
     doc = load(filez)
+    data_begin = -1
     try:
         tab = doc.text.getElementsByType(Table)[0]
         row = len(tab.getElementsByType(TableRow))
         col = len(tab.getElementsByType(TableRow)[0].getElementsByType(TableCell))
         for i in range(0, row):
             table.append([])
+            try:
+                float(str(tab.getElementsByType(TableRow)[i].getElementsByType(TableCell)[0]))
+                if data_begin < 0:
+                    data_begin = i
+            except ValueError:
+                pass
             for j in range(0, col):
                 string = str(tab.getElementsByType(TableRow)[i].getElementsByType(TableCell)[j])
                 if "," in string:
                     string = string.replace(",", ".")
                 table[i].append(string)
 
-        table = correct(table, row, threshold, correction_sessions)
+        table = correct(table, row, threshold, correction_sessions, data_begin)
     except IndexError:
         row = 0
         col = 0
@@ -43,7 +50,7 @@ def calculate_avg_stdev(table, mean_number):
     else:
         length = mean_number
 
-    for row in range(TABLE_DATA_ROW, length):
+    for row in range(0, length):
         for col in range(0, 4):
             try:
                 val = float(table[row][col])
@@ -63,6 +70,7 @@ def read_docx(filez, threshold, correction_sessions):
     table = []
     doc = Document(filez)
     tables = doc.tables
+    data_begin = -1
     for tab in tables:
         for i in range(0, len(tab.rows)):
             table.append([])
@@ -72,20 +80,26 @@ def read_docx(filez, threshold, correction_sessions):
                     if "," in string:
                         string = string.replace(",", ".")
                     table[i].append(string)
+            try:
+                float(table[i][0])
+                if data_begin < 0:
+                    data_begin = i
+            except ValueError:
+                pass
 
-    return [len(table), len(table[0]), correct(table, len(table), threshold, correction_sessions)]
+    return [len(table), len(table[0]), correct(table, len(table), threshold, correction_sessions, data_begin)]
 
 
-def correct(table, row, threshold, correction_sessions):
-    start = TABLE_DATA_ROW + correction_sessions
+def correct(table, row, threshold, correction_sessions, data_begin):
+    start = data_begin + correction_sessions
     if start < row:
         for i in range(start, row):
             for j in range(6, 10):
                 avr = float(table[i - 1][j])
                 if fabs(avr) > threshold:
                     try:
-                        val = float(table[i - 1][j - 6])
-                        table[i - 1][j - 6] = str(np.around(val - avr, decimals=1))
+                        val = float(table[i][j - 6])
+                        table[i][j - 6] = str(np.around(val - avr, decimals=1))
                     except ValueError:
                         pass
     return table

@@ -64,7 +64,7 @@ class FormWidget(QWidget):
         self.dates.clear()
 
         for row in range(0, len(self.table)):
-            if row > 2:
+            if row >= len(self.table) - len(self.vrt):
                 self.dates.append(self.table[row][4])
             for col in range(0, len(self.table[0])):
                 self.frameLayout.addWidget(QLabel(str(self.table[row][col])), row, col)
@@ -103,7 +103,7 @@ class FormWidget(QWidget):
         self.lat.clear()
         self.rtn.clear()
 
-        for row in range(ReadOdt.TABLE_DATA_ROW, len(self.table)):
+        for row in range(0, len(self.table)):
             try:
                 vr = float(self.table[row][0])
                 self.vrt.append(vr)
